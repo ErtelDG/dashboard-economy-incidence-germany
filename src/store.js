@@ -1,15 +1,64 @@
-// store.js
 import { createStore } from "vuex";
+
+function transformAndSortData(data) {
+   const result = {};
+
+   Object.values(data).forEach((item) => {
+      const category = item.category;
+      if (!result[category]) {
+         result[category] = {};
+      }
+      result[category][item.nameJson] = item;
+   });
+
+   // Sort the objects within each category
+   for (const category in result) {
+      result[category] = Object.fromEntries(Object.entries(result[category]).sort(([a], [b]) => a.localeCompare(b)));
+   }
+
+   return result;
+}
+
+function transformAndSortSubcategory(data) {
+   const groupedData = {};
+
+   Object.keys(data).forEach((mainCategory) => {
+      groupedData[mainCategory] = {};
+      Object.keys(data[mainCategory]).forEach((key) => {
+         const item = data[mainCategory][key];
+         if (!groupedData[mainCategory][item.subcategory]) {
+            groupedData[mainCategory][item.subcategory] = {};
+         }
+         groupedData[mainCategory][item.subcategory][key] = item;
+      });
+   });
+
+   const sortedData = Object.keys(groupedData).reduce((acc, mainCategory) => {
+      acc[mainCategory] = Object.keys(groupedData[mainCategory])
+         .sort()
+         .reduce((subAcc, subCategory) => {
+            subAcc[subCategory] = groupedData[mainCategory][subCategory];
+            return subAcc;
+         }, {});
+      return acc;
+   }, {});
+
+   return sortedData;
+}
 
 const store = createStore({
    state() {
       return {
          apiDataList: null,
+         selectedSubcategories: [],
       };
    },
    mutations: {
       setApiData(state, data) {
          state.apiDataList = data;
+      },
+      updateSelectedSubcategories(state, selectedSubcategories) {
+         state.selectedSubcategories = selectedSubcategories;
       },
    },
    actions: {
@@ -20,20 +69,22 @@ const store = createStore({
          };
 
          fetch("https://economy-incidence-germany.denniscodeworld.de/list", requestOptions)
-            .then((response) => response.json()) // Ändere text() zu json(), wenn die API JSON zurückgibt
+            .then((response) => response.json())
             .then((result) => {
-               context.commit("setApiData", result); // Speichere die Daten im State
+               let sortResult = transformAndSortSubcategory(transformAndSortData(result));
+               context.commit("setApiData", sortResult);
             })
             .catch((error) => console.log("error", error));
       },
    },
    getters: {
-      apiDataList(state) { 
+      apiDataList(state) {
          return state.apiDataList;
+      },
+      selectedSubcategories(state) {
+         return state.selectedSubcategories;
       },
    },
 });
-
-store.dispatch("fetchData");
 
 export default store;

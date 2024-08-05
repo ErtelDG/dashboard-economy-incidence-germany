@@ -12,7 +12,7 @@
    </script>
 
    <template>
-      <div class="flex h-screen bg-gray-100">
+      <div class="flex min-h-screen bg-gray-100">
          <!-- sidebar -->
          <Sidebar :sidebarVisible="sidebarVisible" @toggle-sidebar="toggleSidebar" />
 
@@ -33,6 +33,7 @@
             <div class="p-4">
                <!-- Hier kommt der Hauptinhalt hin -->
                <h1 class="text-2xl font-semibold text-gray-800">Welcome to the Dashboard</h1>
+              
             </div>
          </div>
       </div>
