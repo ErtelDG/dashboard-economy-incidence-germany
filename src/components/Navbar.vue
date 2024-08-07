@@ -1,4 +1,15 @@
-<script setup></script>
+<script setup>
+import { useStore } from "vuex";
+
+// Store importieren
+const store = useStore();
+
+// Sidebar-Toggle-Methode
+function toggleSidebar() {
+   store.commit("toggleSidebar");
+}
+</script>
+
 <template>
    <div class="flex items-center justify-between h-16 bg-white border-b border-gray-200">
       <div class="flex items-center px-4">
@@ -17,5 +28,5 @@
          </button>
       </div>
    </div>
-   </template>
+</template>
 <style scoped></style>

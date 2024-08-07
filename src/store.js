@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import { ref } from "vue";
 
 function transformAndSortData(data) {
    const result = {};
@@ -49,6 +50,7 @@ function transformAndSortSubcategory(data) {
 const store = createStore({
    state() {
       return {
+         sidebarVisible: ref(false),
          apiDataList: null,
          selectedSubcategories: [],
       };
@@ -60,6 +62,9 @@ const store = createStore({
       updateSelectedSubcategories(state, selectedSubcategories) {
          state.selectedSubcategories = selectedSubcategories;
       },
+      toggleSidebar(state) {
+         state.sidebarVisible = !state.sidebarVisible;
+         },
    },
    actions: {
       fetchData(context) {
@@ -83,6 +88,9 @@ const store = createStore({
       },
       selectedSubcategories(state) {
          return state.selectedSubcategories;
+      },
+      sidebarVisible(state) {
+         return state.sidebarVisible.value;
       },
    },
 });

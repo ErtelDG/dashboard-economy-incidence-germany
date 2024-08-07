@@ -3,7 +3,7 @@
    <div
       :class="[
          'fixed inset-y-0 left-0 w-80 bg-gray-800 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
-         props.sidebarVisible ? 'translate-x-0' : '-translate-x-full',
+         store.state.sidebarVisible ? 'translate-x-0' : '-translate-x-full',
       ]"
    >
       <div class="flex items-center justify-between h-16 bg-gray-900">
@@ -116,9 +116,9 @@ const props = defineProps({
 const emit = defineEmits(["toggle-sidebar"]);
 
 // Methode zum Umschalten der Sidebar-Sichtbarkeit
-const toggleSidebar = () => {
-   emit("toggle-sidebar");
-};
+function toggleSidebar() {
+   store.commit("toggleSidebar");
+}
 
 // Verfolgung der offenen Kategorien und Subkategorien
 const openCategories = ref(new Set());

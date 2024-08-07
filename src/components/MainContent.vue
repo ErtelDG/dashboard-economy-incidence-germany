@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, onMounted, reactive } from "vue";
 import { useStore } from "vuex";
+import Chart from "./Chart.vue";
 
 // Holen Sie sich den Store
 const store = useStore();
@@ -56,6 +57,11 @@ onMounted(() => {
    const initialIds = store.getters.selectedSubcategories;
    initialIds.forEach((id) => fetchData(id));
 });
+
+// Sidebar-Toggle-Methode
+function toggleSidebar() {
+   store.commit("toggleSidebar");
+}
 </script>
 
 <template>
@@ -74,8 +80,9 @@ onMounted(() => {
       </div>
       <div class="p-4">
          <h1 class="text-2xl font-semibold text-gray-800">Welcome to the Dashboard</h1>
+         <Chart :apiData="apiData" />
          <div v-for="(data, id) in apiData" :key="id" class="mb-4">
-            <pre>{{ data }}</pre>
+            <!--            <pre>{{ data }}</pre>-->
             <!-- Zeigt die Daten für jede ID an -->
          </div>
       </div>
