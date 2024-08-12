@@ -1,0 +1,99 @@
+{
+   "17227803330199292": {
+      "category": "Erwerbstätige",
+      "data": [
+         {
+            "Datum": "01/07/1991",
+            "Kalender- und saisonbereinigte Werte (BV 4.1), Veränderung gegenüber Vorquartal in %": -0.7,
+            "Kalender- und saisonbereinigte Werte (BV 4.1), in 1000": 35165,
+            "Originalwert, Veränderung gegenüber Vorjahresquartal in %": ".",
+            "Originalwert, in 1000": 35225,
+            "Restkomponente (BV 4.1)": -37.4,
+            "Trend-Konjunktur-Komponente (BV 4.1), Veränderung gegenüber Vorquartal in %": -0.5,
+            "Trend-Konjunktur-Komponente (BV 4.1), in 1000": 35202
+         },
+         {
+            "Datum": "01/10/1991",
+            "Kalender- und saisonbereinigte Werte (BV 4.1), Veränderung gegenüber Vorquartal in %": -0.2,
+            "Kalender- und saisonbereinigte Werte (BV 4.1), in 1000": 35088,
+            "Originalwert, Veränderung gegenüber Vorjahresquartal in %": ".",
+            "Originalwert, in 1000": 35312,
+            "Restkomponente (BV 4.1)": 18.1,
+            "Trend-Konjunktur-Komponente (BV 4.1), Veränderung gegenüber Vorquartal in %": -0.4,
+            "Trend-Konjunktur-Komponente (BV 4.1), in 1000": 35070
+         },
+         {
+            "Datum": "01/01/1992",
+            "Kalender- und saisonbereinigte Werte (BV 4.1), Veränderung gegenüber Vorquartal in %": -0.4,
+            "Kalender- und saisonbereinigte Werte (BV 4.1), in 1000": 34946,
+            "Originalwert, Veränderung gegenüber Vorjahresquartal in %": "-1,8",
+            "Originalwert, in 1000": 34762,
+            "Restkomponente (BV 4.1)": -2.7,
+            "Trend-Konjunktur-Komponente (BV 4.1), Veränderung gegenüber Vorquartal in %": -0.3,
+            "Trend-Konjunktur-Komponente (BV 4.1), in 1000": 34948
+         },
+         {
+            "Datum": "01/04/1992",
+            "Kalender- und saisonbereinigte Werte (BV 4.1), Veränderung gegenüber Vorquartal in %": -0.3,
+            "Kalender- und saisonbereinigte Werte (BV 4.1), in 1000": 34837,
+            "Originalwert, Veränderung gegenüber Vorjahresquartal in %": "-1,6",
+            "Originalwert, in 1000": 34724,
+            "Restkomponente (BV 4.1)": 8.9,
+            "Trend-Konjunktur-Komponente (BV 4.1), Veränderung gegenüber Vorquartal in %": -0.3,
+            "Trend-Konjunktur-Komponente (BV 4.1), in 1000": 34828
+         }
+      ],
+      "economy_incidence": "Konjunkturindikatoren",
+      "id": 17227803330199292,
+      "nameJson": "arbeitnehmer_im_inland_bv41",
+      "subcategory": "Arbeitnehmer",
+      "title": "Arbeitnehmer im Inland mit Kalender- und Saisonbereinigung nach BV 4.1",
+      "url": "https://www.destatis.de/static/de_/opendata/data/arbeitnehmer_im_inland_bv41.csv"
+   },
+   "17227803350852268": {
+      "category": "Erwerbstätige",
+      "data": [
+         {
+            "Datum": "01/07/1991",
+            "Originalwert, Veränderung gegenüber Vorjahresquartal in %": ".",
+            "Originalwert, in 1000": 35225,
+            "Saison- und kalenderbereinigte Werte nach X 13 JDemetra+, Veränderung gegenüber Vorsquartal in %": ".",
+            "Saison- und kalenderbereinigte Werte nach X 13 JDemetra+, in 1000": "."
+         },
+         {
+            "Datum": "01/10/1991",
+            "Originalwert, Veränderung gegenüber Vorjahresquartal in %": ".",
+            "Originalwert, in 1000": 35312,
+            "Saison- und kalenderbereinigte Werte nach X 13 JDemetra+, Veränderung gegenüber Vorsquartal in %": ".",
+            "Saison- und kalenderbereinigte Werte nach X 13 JDemetra+, in 1000": "."
+         },
+         {
+            "Datum": "01/01/1992",
+            "Originalwert, Veränderung gegenüber Vorjahresquartal in %": ".",
+            "Originalwert, in 1000": 34762,
+            "Saison- und kalenderbereinigte Werte nach X 13 JDemetra+, Veränderung gegenüber Vorsquartal in %": ".",
+            "Saison- und kalenderbereinigte Werte nach X 13 JDemetra+, in 1000": "34982"
+         },
+         {
+            "Datum": "01/04/1992",
+            "Originalwert, Veränderung gegenüber Vorjahresquartal in %": ".",
+            "Originalwert, in 1000": 34724,
+            "Saison- und kalenderbereinigte Werte nach X 13 JDemetra+, Veränderung gegenüber Vorsquartal in %": "-0,3",
+            "Saison- und kalenderbereinigte Werte nach X 13 JDemetra+, in 1000": "34866"
+         },
+         {
+            "Datum": "01/07/1992",
+            "Originalwert, Veränderung gegenüber Vorjahresquartal in %": ".",
+            "Originalwert, in 1000": 34792,
+            "Saison- und kalenderbereinigte Werte nach X 13 JDemetra+, Veränderung gegenüber Vorsquartal in %": "-0,5",
+            "Saison- und kalenderbereinigte Werte nach X 13 JDemetra+, in 1000": "34680"
+         }
+      ],
+      "economy_incidence": "Konjunkturindikatoren",
+      "id": 17227803350852268,
+      "nameJson": "arbeitnehmer_im_inland_x13",
+      "subcategory": "Arbeitnehmer",
+      "title": "Arbeitnehmer Inländer mit Kalender- und Saisonbereinigung nach X13 JDemetra+",
+      "url": "https://www.destatis.de/static/de_/opendata/data/arbeitnehmer_im_inland_x13.csv"
+   }
+}

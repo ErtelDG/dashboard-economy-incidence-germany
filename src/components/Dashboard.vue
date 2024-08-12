@@ -7,7 +7,7 @@ import MainContent from "./MainContent.vue";
 <template>
    <div class="flex min-h-screen bg-gray-100">
       <!-- sidebar -->
-      <Sidebar />
+      <Sidebar  />
 
       <!-- Main content -->
       <MainContent />

@@ -78,13 +78,15 @@ function toggleSidebar() {
             <span class="text-lg font-medium text-gray-800">Dashboard</span>
          </div>
       </div>
-      <div class="p-4">
-         <h1 class="text-2xl font-semibold text-gray-800">Welcome to the Dashboard</h1>
-         <Chart :apiData="apiData" />
-         <div v-for="(data, id) in apiData" :key="id" class="mb-4">
-            <!--            <pre>{{ data }}</pre>-->
-            <!-- Zeigt die Daten für jede ID an -->
+      <div class="">
+         <h1 class="text-4xl font-semibold text-gray-800 w-full text-center py-4">Welcome to the Dashboard</h1>
+         <div class="w-full flex flex-wrap justify-around p-2">
+            <div v-for="(data, id) in apiData" :key="id" class="mb-4">
+               <Chart :apiData="data" />
+            </div>
          </div>
+         <!--            <pre>{{ data }}</pre>-->
+         <!-- Zeigt die Daten für jede ID an -->
       </div>
    </div>
 </template>

@@ -1,58 +1,67 @@
 <template>
-   <h5>Chart component</h5>
-   <div v-for="api in apiData" :key="id">
-      {{ Object.keys(api.data).length }}
-      <canvas ref="myChart" width="400" height="200"></canvas>
+   <div class="rounded-md border-4 w-[40rem] flex-col items-center">
+      <div class="w-full text-center font-semibold py-2">{{ chartData.title }}</div>
+      <div class="flex aspect-[2/1] w-full border-gray-200 p-2 justify-center">
+         <div class="border-2 h-full w-1/5">ss</div>
+         <div class="flex-col justify-center items-center w-4/5 h-full border-2">
+            <Line :data="chartData" :options="chartOptions" />
+         </div>
+      </div>
    </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { Chart, registerables } from "chart.js";
+// DataPage.vue
+import { ref, watch } from "vue";
+import { Line } from "vue-chartjs";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 
-// Registriere die Chart.js Komponenten
-Chart.register(...registerables);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-// Referenz auf das Canvas-Element
-const myChart = ref(null);
+const chartFilter = ref([])
 
-onMounted(() => {
-   const ctx = myChart.value.getContext("2d");
-   new Chart(ctx, {
-      type: "line",
-      data: {
-         labels: ["Januar", "Februar", "März", "April", "Mai"],
-         datasets: [
-            {
-               label: "Linie 1",
-               data: [10, 20, 15, 25, 30],
-               borderColor: "rgba(75, 192, 192, 1)",
-               backgroundColor: "rgba(75, 192, 192, 0.2)",
-               fill: true,
-            },
-            {
-               label: "Linie 2",
-               data: [20, 10, 30, 15, 25],
-               borderColor: "rgba(255, 99, 132, 1)",
-               backgroundColor: "rgba(255, 99, 132, 0.2)",
-               fill: true,
-            },
-         ],
-      },
-      options: {
-         scales: {
-            y: {
-               beginAtZero: true,
-            },
-         },
-      },
-   });
-});
+const chartData = {
+   title: "Titel",
+   labels: [],
+   datasets: [],
+};
+
+const chartOptions = {
+   responsive: true,
+   maintainAspectRatio: false,
+};
 
 const props = defineProps({
    apiData: {
-      apiData: Object,
+      type: Object,
       required: true,
    },
 });
+
+const currApiDataChart = ref([]);
+
+watch(
+   () => props.apiData,
+   (newData) => {
+      if (chartData != null && newData != null) {
+         chartData.title = newData.title;
+         console.log("newData ----------------->>> ");
+         newData.data.forEach((df) => {
+            const key = Object.keys(df);
+            key.forEach((key) => {console.log(chartFilter.value.find(key)) })
+            key.forEach((key) => {
+               if (key == "Datum") {
+                  chartData.labels.push(df[key]);
+               } else {
+                 // console.log(key);
+               }
+            });
+         });
+      }
+
+      currApiDataChart.value = newData;
+      console.log(currApiDataChart.value);
+   },
+   { immediate: true }
+);
 </script>

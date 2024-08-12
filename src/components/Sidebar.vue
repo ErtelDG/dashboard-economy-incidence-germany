@@ -104,14 +104,6 @@ onMounted(() => {
    store.dispatch("fetchData");
 });
 
-// Props empfangen
-const props = defineProps({
-   sidebarVisible: {
-      type: Boolean,
-      required: true,
-   },
-});
-
 // Emits definieren
 const emit = defineEmits(["toggle-sidebar"]);
 
