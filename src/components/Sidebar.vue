@@ -1,8 +1,8 @@
 <template>
    <!-- sidebar -->
-   <div
+   <div 
       :class="[
-         'fixed inset-y-0 left-0 w-80 bg-gray-800 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
+         'fixed over inset-y-0 left-0 w-80 bg-gray-800 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
          store.state.sidebarVisible ? 'translate-x-0' : '-translate-x-full',
       ]"
    >
@@ -14,8 +14,8 @@
             </svg>
          </button>
       </div>
-      <div class="flex flex-col flex-1 overflow-y-auto">
-         <div class="px-4 py-6">
+      <div class="custom-height flex flex-col flex-1 overflow-scroll">
+         <div class="p-2">
             <div class="flex flex-col flex-1 overflow-y-auto">
                <nav class="flex-1 px-2 py-4 bg-gray-800">
                   <div v-for="(subcategories, category) in sortedCategories" :key="category">
@@ -162,3 +162,9 @@ const handleCheckboxChange = (id) => {
    store.commit("updateSelectedSubcategories", selectedSubcategories);
 };
 </script>
+<style scoped>
+.custom-height {
+   height: calc(100vh - 4rem);
+   scrollbar-width: none;
+}
+</style>

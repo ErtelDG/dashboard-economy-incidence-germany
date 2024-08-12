@@ -5,15 +5,18 @@ import MainContent from "./MainContent.vue";
 </script>
 
 <template>
-   <div class="flex min-h-screen bg-gray-100">
+   <div class="flex min-h-screen bg-gray-100 scrollbar-w-0">
       <!-- sidebar -->
-      <Sidebar  />
-
+      <div class="sticky top-0">
+         <Sidebar />
+      </div>
       <!-- Main content -->
       <MainContent />
    </div>
 </template>
 
 <style scoped>
-/* Hier können zusätzliche Stile hinzugefügt werden */
+.scrollbar-w-0 {
+   scrollbar-width: none;
+}
 </style>

@@ -65,7 +65,7 @@ function toggleSidebar() {
 </script>
 
 <template>
-   <div class="flex flex-col flex-1 overflow-y-auto">
+   <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 relative">
       <div class="flex items-center justify-between h-16 bg-white border-b border-gray-200">
          <div class="flex items-center px-4">
             <button @click="toggleSidebar" class="text-gray-500 focus:outline-none focus:text-gray-700 md:hidden">
@@ -75,11 +75,10 @@ function toggleSidebar() {
             </button>
          </div>
          <div class="flex items-center px-4 w-full">
-            <span class="text-lg font-medium text-gray-800">Dashboard</span>
+            <span class="text-xl font-bold text-gray-800">Welcome to the Dashboard</span>
          </div>
       </div>
-      <div class="">
-         <h1 class="text-4xl font-semibold text-gray-800 w-full text-center py-4">Welcome to the Dashboard</h1>
+      <div class="overflow-scroll custom-height">
          <div class="w-full flex flex-wrap justify-around p-2">
             <div v-for="(data, id) in apiData" :key="id" class="mb-4">
                <Chart :apiData="data" />
@@ -91,4 +90,9 @@ function toggleSidebar() {
    </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.custom-height {
+   height: calc(100vh - 4rem);
+   scrollbar-width: none;
+}
+</style>
