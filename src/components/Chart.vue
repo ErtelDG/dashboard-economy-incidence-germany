@@ -7,55 +7,67 @@
                <th class="text-lg border-2 border-solid border-[#dddddd]">Kategorie</th>
             </tr>
             <tr v-for="category in chartCategories" :key="category" class="border-2 border-solid border-[#dddddd]">
-               <div v-if="category !== 'Datum'" class="border-2 flex gap-2 p-2 border-solid border-[#dddddd]">
-                  <input type="checkbox" :id="category" :name="category" />
+               <td v-if="category !== 'Datum'" class="border-2 p-2 border-solid border-[#dddddd]">
+                  <input type="radio" :id="category" :value="category" v-model="chartFilter" />
                   <label :for="category">{{ category }}</label>
-               </div>
+               </td>
             </tr>
          </table>
          <div class="flex aspect-[2/1] w-5/6 border-gray-200 p-2 justify-center">
-            <Line :data="chartData" :options="chartOptions" />
+            <div style="width: 800px"><canvas :id="canvasId"></canvas></div>
          </div>
       </div>
    </div>
 </template>
 
 <script setup>
-// DataPage.vue
-import { ref, watch } from "vue";
-import { Line } from "vue-chartjs";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
+import { ref, watch, onMounted } from "vue";
+import Chart from "chart.js/auto";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+// Track the current chart instance
+const myCharts = new Map(); // Use a Map to store multiple chart instances
 
-const chartFilter = ref([]);
+// Reactive references
+const canvasId = ref("");
+const chartFilter = ref("");
+const currApiDataChart = ref([]);
+const chartCategories = ref([]);
+const chartData = ref({
+   title: "TITEL DEFINIEREN",
+   labels: [],
+   datasets: [{ label: "Hallo", data: [] }],
+});
 
-const chartData = {
-   title: "Monatliche Verkäufe",
-   labels: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli"],
-   datasets: [
-      {
-         label: "2023 Verkäufe",
-         data: [120, 150, 180, 220, 200, 230, 250],
-         borderColor: "rgba(75, 192, 192, 1)",
-         backgroundColor: "rgba(75, 192, 192, 0.2)",
-         fill: true,
-      },
-      {
-         label: "2022 Verkäufe",
-         data: [100, 140, 160, 200, 180, 210, 240],
-         borderColor: "rgba(153, 102, 255, 1)",
-         backgroundColor: "rgba(153, 102, 255, 0.2)",
-         fill: true,
-      },
-   ],
-};
+// Function to initialize and update the chart
+function updateChart() {
+   const chartElement = document.getElementById(canvasId.value);
+   if (chartElement) {
+      // Destroy the old chart if it exists
+      if (myCharts.has(canvasId.value)) {
+         myCharts.get(canvasId.value).destroy();
+         myCharts.delete(canvasId.value);
+      }
 
-const chartOptions = {
-   responsive: true,
-   maintainAspectRatio: false,
-};
+      // Create a new chart
+      const newChart = new Chart(chartElement, {
+         type: "bar",
+         data: {
+            labels: chartData.value.labels,
+            datasets: [
+               {
+                  label: "Acquisitions by year",
+                  data: chartData.value.datasets[0].data,
+               },
+            ],
+         },
+      });
 
+      // Store the new chart instance
+      myCharts.set(canvasId.value, newChart);
+   }
+}
+
+// Props to receive API data
 const props = defineProps({
    apiData: {
       type: Object,
@@ -63,36 +75,39 @@ const props = defineProps({
    },
 });
 
-const currApiDataChart = ref([]);
-const chartCategories = ref([]);
+// Watchers
+watch(chartFilter, (newFilter) => {
+   if (newFilter && currApiDataChart.value.data.length > 0) {
+      chartData.value.labels = [];
+      chartData.value.datasets[0].data = [];
+      currApiDataChart.value.data.forEach((element) => {
+         chartData.value.labels.push(element["Datum"]);
+         chartData.value.datasets[0].data.push(element[newFilter]);
+      });
+
+      updateChart();
+   }
+});
 
 watch(
    () => props.apiData,
    (newData) => {
-      if (chartData != null && newData != null) {
-         chartData.title = newData.title;
-         console.log("newData ----------------->>> ");
+      if (newData && newData.data) {
+         canvasId.value = `${newData.category}-${newData.subcategory}`; // Ensure a unique ID
+         chartData.value.title = newData.title;
          chartCategories.value = Object.keys(newData.data[0]);
-
-         /*         newData.data.forEach((df) => {
-            const key = Object.keys(df);
-            console.log(key) */
-         /* key.forEach((key) => {console.log(chartFilter.value.find(key)) })
-            key.forEach((key) => {
-               if (key == "Datum") {
-                  chartData.labels.push(df[key]);
-               } else {
-                 // console.log(key);
-               }
-            }); 
-         });*/
+         currApiDataChart.value = newData;
+         updateChart(); // Update chart whenever apiData changes
       }
-
-      currApiDataChart.value = newData;
-      console.log("-----> AKTUELLE WERT VON urrApiDataChart <-----", currApiDataChart.value);
    },
    { immediate: true }
 );
+
+onMounted(() => {
+   if (canvasId.value) {
+      updateChart(); // Ensure chart is updated when component is mounted
+   }
+});
 </script>
 
 <style scoped>

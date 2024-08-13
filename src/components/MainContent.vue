@@ -39,6 +39,9 @@ const debounce = (func, delay) => {
 
 // Methode zum Handhaben von Änderungen in selectedSubcategories
 const handleChanges = debounce((newValue, oldValue) => {
+   console.log("-------------------------------------");
+   console.log(oldValue);
+   console.log(newValue);
    const newIds = newValue.filter((id) => !oldValue.includes(id));
    const removedIds = oldValue.filter((id) => !newValue.includes(id));
 
@@ -81,6 +84,7 @@ function toggleSidebar() {
       <div class="overflow-scroll custom-height">
          <div class="w-full flex flex-wrap justify-around p-2">
             <div v-for="(data, id) in apiData" :key="id" class="mb-4">
+            
                <Chart :apiData="data" />
             </div>
          </div>
