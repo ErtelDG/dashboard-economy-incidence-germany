@@ -32,7 +32,7 @@
                   v-if="!chartData.datasets[0].data.every((element) => element != null)"
                   class="text-center flex items-center justify-center font-bold absolute inset-0"
                >
-                  <div class="flex items-center px-4 py-2 shadow rounded-md text-white bg-indigo-500">
+                  <div class="flex items-center px-4 py-2 shadow rounded-md text-white bg-gray-800">
                      Bitte eine Kategorie auswählen um Chart anzeigen zu lassen ...
                   </div>
                </div>
@@ -45,7 +45,7 @@
       <div v-else class="w-full min-h-full flex justify-center items-center">
          <button
             type="button"
-            class="inline-flex items-center px-4 py-2 font-semibold leading-6 shadow rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed"
+            class="inline-flex items-center px-4 py-2 font-semibold leading-6 shadow rounded-md text-white bg-gray-800 transition ease-in-out duration-150 cursor-not-allowed"
             disabled=""
          >
             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

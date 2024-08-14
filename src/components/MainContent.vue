@@ -86,7 +86,7 @@ function toggleSidebar() {
             </button>
          </div>
          <div class="flex items-center px-4 w-full">
-            <span v-if="selectedSubcategories.length === 0" class="text-white font-bold text-center uppercase w-full">Bitte eine Economy Incidence Bereich auswählen.</span>
+            <span v-if="selectedSubcategories.length === 0" class="text-white font-bold text-center w-full">Bitte eine Bereich auswählen.</span>
          </div>
       </div>
       <div class="overflow-scroll custom-height w-full h-[calc(100vh - 4rem)]">
