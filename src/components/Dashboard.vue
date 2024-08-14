@@ -11,7 +11,9 @@ import MainContent from "./MainContent.vue";
          <Sidebar />
       </div>
       <!-- Main content -->
-      <MainContent />
+      <div class="w-full">
+         <MainContent />
+      </div>
    </div>
 </template>
 

@@ -7,7 +7,18 @@ import Chart from "./Chart.vue";
 const store = useStore();
 
 // Holen Sie sich den Getter für selectedSubcategories
-const selectedSubcategories = ref(store.getters.selectedSubcategories);
+const selectedSubcategories = ref([]);
+
+watch(
+   () => store.state.selectedSubcategories,
+   (newData, oldData) => {
+      selectedSubcategories.value = [];
+      newData.forEach((element) => {
+         selectedSubcategories.value.push(element);
+      });
+   },
+   { immediate: true }
+);
 
 // Reaktive Variable für die API-Daten
 const apiData = reactive({});
@@ -39,9 +50,6 @@ const debounce = (func, delay) => {
 
 // Methode zum Handhaben von Änderungen in selectedSubcategories
 const handleChanges = debounce((newValue, oldValue) => {
-   console.log("-------------------------------------");
-   console.log(oldValue);
-   console.log(newValue);
    const newIds = newValue.filter((id) => !oldValue.includes(id));
    const removedIds = oldValue.filter((id) => !newValue.includes(id));
 
@@ -68,8 +76,8 @@ function toggleSidebar() {
 </script>
 
 <template>
-   <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 relative">
-      <div class="flex items-center justify-between h-16 bg-white border-b border-gray-200">
+   <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 relative w-full">
+      <div class="flex items-center justify-between h-16 border-b border-gray-200 bg-gray-900">
          <div class="flex items-center px-4">
             <button @click="toggleSidebar" class="text-gray-500 focus:outline-none focus:text-gray-700 md:hidden">
                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -78,18 +86,15 @@ function toggleSidebar() {
             </button>
          </div>
          <div class="flex items-center px-4 w-full">
-            <span class="text-xl font-bold text-gray-800">Welcome to the Dashboard</span>
+            <span v-if="selectedSubcategories.length === 0" class="text-white font-bold text-center uppercase w-full">Bitte eine Economy Incidence Bereich auswählen.</span>
          </div>
       </div>
-      <div class="overflow-scroll custom-height">
-         <div class="w-full flex flex-wrap justify-around p-2">
-            <div v-for="(data, id) in apiData" :key="id" class="mb-4">
-            
-               <Chart :apiData="data" />
+      <div class="overflow-scroll custom-height w-full h-[calc(100vh - 4rem)]">
+         <div class="w-full h-full flex flex-wrap justify-around p-2">
+            <div v-for="subcategory in selectedSubcategories" class="mb-4 w-full">
+               <Chart :subcategory="subcategory" :apiData="apiData" />
             </div>
          </div>
-         <!--            <pre>{{ data }}</pre>-->
-         <!-- Zeigt die Daten für jede ID an -->
       </div>
    </div>
 </template>

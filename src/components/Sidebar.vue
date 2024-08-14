@@ -6,7 +6,7 @@
          store.state.sidebarVisible ? 'translate-x-0' : '-translate-x-full',
       ]"
    >
-      <div class="flex items-center justify-between h-16 bg-gray-900">
+      <div class="flex items-center justify-between h-16 bg-gray-900 border-b border-gray-200">
          <span class="text-white font-bold text-center uppercase w-full">Economy Incidence Germany</span>
          <button @click="toggleSidebar" class="text-gray-500 focus:outline-none focus:text-gray-700 md:hidden px-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
