@@ -90,10 +90,30 @@ function toggleSidebar() {
          </div>
       </div>
       <div class="overflow-scroll custom-height w-full h-[calc(100vh - 4rem)]">
-         <div class="w-full h-full flex flex-wrap justify-around p-2">
-            <div v-for="subcategory in selectedSubcategories" class="mb-4 w-full">
-               <Chart :subcategory="subcategory" :apiData="apiData" />
+         <div class="w-full h-full flex flex-wrap justify-around items-start px-2 py-4">
+            <div v-for="subcategory in selectedSubcategories" :key="subcategory" class="mb-4 w-[48rem]">
+               <Chart v-if="apiData[subcategory]" :subcategory="subcategory" :apiData="apiData[subcategory]" />
+               <div v-if="!apiData[subcategory]" class="w-full h-[28.5rem] flex  justify-center items-center rounded-md border-4">
+                  <div>
+                     <button
+                        type="button"
+                        class="inline-flex items-center px-4 py-2 font-semibold leading-6 shadow rounded-md text-white bg-gray-800 transition ease-in-out duration-150 cursor-not-allowed"
+                        disabled=""
+                     >
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                           <path
+                              class="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                           ></path>
+                        </svg>
+                        Bitte warten, Daten werden geladen...
+                     </button>
+                  </div>
+               </div>
             </div>
+            <div v-if="selectedSubcategories.length % 2 == 1" class="mb-4 w-[48rem]"></div>
          </div>
       </div>
    </div>

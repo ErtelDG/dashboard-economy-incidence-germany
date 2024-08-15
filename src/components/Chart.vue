@@ -3,31 +3,33 @@
       <div v-if="chartCategories[0]" class="rounded-md border-4 w-full flex-col items-center p-2 scrollbar-w-0">
          <div class="flex w-full items-center justify-center py-2">
             <div class="w-1/6 flex items-center justify-center">
-               <div v-if="chartData.datasets[0].data.every((element) => element != null)" class="dropdown flex-col item-center">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 px-4 py-2">
-                     Chart Type: {{ chartType.charAt(0).toUpperCase() + chartType.slice(1) }}
-                  </button>
+               <div class="dropdown flex-col item-center w-full">
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-sm">Kategorie</button>
                   <div class="dropdown-content w-full">
+                     <div v-for="(value, category) in chartCategories[0]" :key="category">
+                        <div v-if="category !== 'Datum'">
+                           <div class="break-words hyphens-auto text-xs">
+                              <input type="radio" :id="`${category}@@@${subcategory}`" :value="category" v-model="chartFilter" />
+                              <label :for="`${category}@@@${subcategory}`">{{ category }}</label>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="w-4/6 text-center font-bold text-wrap px-4">{{ chartData.title }}</div>
+            <div class="w-1/6 flex items-center justify-center">
+               <div v-if="chartData.datasets[0].data.every((element) => element != null)" class="dropdown flex-col item-center w-full">
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center text-sm">Diagrammtype</button>
+                  <div class="dropdown-content w-full text-xs">
                      <a href="#" @click="selectChartType('line')">Line</a>
                      <a href="#" @click="selectChartType('bar')">Bar</a>
                   </div>
                </div>
             </div>
-            <div class="w-5/6 flex justify-center items-center text-xl font-bold">{{ chartData.title }}</div>
          </div>
          <div class="flex items-center w-full">
-            <table class="text-wrap w-1/6 border-gray-200 p-2">
-               <tr>
-                  <th class="text-lg border-2 border-solid border-[#dddddd]">Kategorie</th>
-               </tr>
-               <tr v-for="(value, category) in chartCategories[0]" :key="category" class="border-2 border-solid border-[#dddddd]">
-                  <td v-if="category !== 'Datum'" class="border-2 p-2 border-solid border-[#dddddd] flex gap-2">
-                     <input type="radio" :id="category" :value="category" v-model="chartFilter" />
-                     <label :for="category">{{ category }}</label>
-                  </td>
-               </tr>
-            </table>
-            <div class="flex aspect-[2/1] w-5/6 border-gray-200 p-2 justify-center relative">
+            <div class="flex aspect-[2/1] w-full border-gray-200 p-2 justify-center relative">
                <div
                   v-if="!chartData.datasets[0].data.every((element) => element != null)"
                   class="text-center flex items-center justify-center font-bold absolute inset-0"
@@ -43,7 +45,7 @@
          </div>
       </div>
       <div v-else class="w-full min-h-full flex justify-center items-center">
-         <button
+         <!--          <button
             type="button"
             class="inline-flex items-center px-4 py-2 font-semibold leading-6 shadow rounded-md text-white bg-gray-800 transition ease-in-out duration-150 cursor-not-allowed"
             disabled=""
@@ -57,7 +59,7 @@
                ></path>
             </svg>
             Bitte warten, Daten werden geladen...
-         </button>
+         </button> -->
       </div>
    </div>
 </template>
@@ -71,7 +73,7 @@ const myCharts = new Map(); // Use a Map to store multiple chart instances
 
 // Reactive references
 const chartType = ref("line");
-const canvasId = ref("");
+const canvasId = ref(null);
 const chartFilter = ref("");
 const currApiDataChart = ref([]);
 const chartCategories = ref([]);
@@ -90,40 +92,49 @@ watch(chartType, (newValue) => {
 });
 
 // Function to initialize and update the chart
-function updateChart() {
-   const chartElement = document.getElementById(canvasId.value);
+async function updateChart() {
+   let chartElement = null;
+
+   while (chartElement === null) {
+      chartElement = document.getElementById(canvasId.value);
+      await delay(100);
+   }
+
    if (chartElement) {
       // Destroy the old chart if it exists
       if (myCharts.has(canvasId.value)) {
          myCharts.get(canvasId.value).destroy();
          myCharts.delete(canvasId.value);
       }
+      const hasNonNullNonUndefined = !chartData.value.datasets[0].data.every((element) => element === null || element === undefined);
 
-      chartData.value.datasets[0].data.forEach((element, index, array) => {
-         if (typeof element === "string" && element.includes(",")) {
-            let convertedElement = parseFloat(element.replace(",", "."));
-            array[index] = convertedElement;
-         } else if (typeof element === "string") {
-            array[index] = parseFloat(element);
-         }
-      });
+      if (hasNonNullNonUndefined) {
+         chartData.value.datasets[0].data.forEach((element, index, array) => {
+            if (typeof element === "string" && element.includes(",")) {
+               let convertedElement = parseFloat(element.replace(",", "."));
+               array[index] = convertedElement;
+            } else if (typeof element === "string") {
+               array[index] = parseFloat(element);
+            }
+         });
 
-      // Create a new chart
-      const newChart = new Chart(chartElement, {
-         type: chartType.value,
-         data: {
-            labels: chartData.value.labels,
-            datasets: [
-               {
-                  label: chartData.value.datasets[0].label,
-                  data: chartData.value.datasets[0].data,
-               },
-            ],
-         },
-      });
+         // Create a new chart
+         const newChart = new Chart(chartElement, {
+            type: chartType.value,
+            data: {
+               labels: chartData.value.labels,
+               datasets: [
+                  {
+                     label: chartData.value.datasets[0].label,
+                     data: chartData.value.datasets[0].data,
+                  },
+               ],
+            },
+         });
 
-      // Store the new chart instance
-      myCharts.set(canvasId.value, newChart);
+         // Store the new chart instance
+         myCharts.set(canvasId.value, newChart);
+      }
    }
 }
 
@@ -141,14 +152,15 @@ const props = defineProps({
 
 // Watchers
 watch(chartFilter, (newFilter) => {
-   if (newFilter && currApiDataChart.value[currentSubcategory.value].data.length > 0) {
+   if (newFilter && currApiDataChart.value.data.length > 0) {
       const labels = [];
       const data = [];
 
-      currApiDataChart.value[currentSubcategory.value].data.forEach((element) => {
+      currApiDataChart.value.data.forEach((element) => {
          labels.push(element["Datum"]);
          data.push(element[newFilter]);
       });
+
       chartData.value = {
          ...chartData.value,
          labels,
@@ -172,13 +184,12 @@ function delay(ms) {
 watch(
    () => props.apiData,
    async (newData) => {
-      while (!newData || !newData[currentSubcategory.value]) {
+      while (!newData && !newData.subcategory) {
          await delay(2000);
       }
-
-      canvasId.value = `${newData[currentSubcategory.value].category}-${currentSubcategory.value}`;
-      chartData.value.title = newData[currentSubcategory.value].title;
-      chartCategories.value = newData[currentSubcategory.value].data;
+      canvasId.value = `${newData.category}-${newData.id}`;
+      chartData.value.title = newData.title;
+      chartCategories.value = newData.data;
       currApiDataChart.value = newData;
 
       if (!chartFilter.value) {
@@ -190,10 +201,13 @@ watch(
    { immediate: true }
 );
 
-onMounted(() => {
-   if (canvasId.value) {
-      updateChart(); // Ensure chart is updated when component is mounted
+onMounted(async () => {
+   while (Object.keys(props.apiData).length <= 0 && props.apiData.id == (null || undefined)) {
+      console.log("Warte auf daten"); // Sollte in der Schleife ausgeführt werden
+      await delay(2000); // Wartezeit
    }
+
+   updateChart();
 });
 
 const { subcategory } = props;
@@ -226,20 +240,46 @@ tr:nth-child(even) {
 }
 
 /* Links inside the dropdown */
-.dropdown-content a {
+.dropdown-content a,
+.dropdown-content label {
    color: black;
-   padding: 0.5rem 1rem;
    text-decoration: none;
    display: block;
+   padding: 0.5rem;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {
+.dropdown-content a:hover,
+.dropdown-content label:hover {
    background-color: #f1f1f1;
 }
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
    display: block;
+}
+
+/* Hide radio buttons */
+input[type="radio"] {
+   display: none;
+}
+
+/* Style labels to look like links */
+label {
+   cursor: pointer;
+   color: black;
+   text-decoration: none;
+   display: block;
+   padding: 0.5rem;
+}
+
+/* Change color of labels on hover */
+label:hover {
+   background-color: #f1f1f1;
+}
+
+/* Change color of selected label */
+input[type="radio"]:checked + label {
+   background-color: #ddd;
 }
 </style>
