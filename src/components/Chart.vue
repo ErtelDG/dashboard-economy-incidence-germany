@@ -133,6 +133,8 @@ async function updateChart() {
                   {
                      label: chartData.value.datasets[0].label,
                      data: chartData.value.datasets[0].data,
+                     pointRadius: 2,
+                     pointHoverRadius: 5,
                   },
                ],
             },

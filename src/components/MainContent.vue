@@ -28,6 +28,15 @@ const fetchData = async (id) => {
    try {
       const response = await fetch(`https://economy-incidence-germany.denniscodeworld.de/data?id=${id}`);
       const data = await response.json();
+      Object.keys(data.data).forEach((element) => {
+         Object.keys(data.data[element]).forEach((element2) => {
+            if (element2.includes("VerÃ¤nderung") || element2.includes("gegenÃ¼ber")) {
+               let correctedElement2 = element2.replace("VerÃ¤nderung", "Veränderung").replace("gegenÃ¼ber", "gegenüber");
+               data.data[element][correctedElement2] = data.data[element][element2];
+               delete data.data[element][element2];
+            }
+         });
+      });
       apiData[id] = data; // Speichern Sie die Daten im reaktiven Objekt
    } catch (error) {
       console.error("Fehler beim Abrufen der Daten:", error);
@@ -93,7 +102,7 @@ function toggleSidebar() {
          <div class="w-full h-full flex flex-wrap justify-around items-start px-2 py-4">
             <div v-for="subcategory in selectedSubcategories" :key="subcategory" class="mb-4 w-[48rem]">
                <Chart v-if="apiData[subcategory]" :subcategory="subcategory" :apiData="apiData[subcategory]" />
-               <div v-if="!apiData[subcategory]" class="w-full h-[28.5rem] flex  justify-center items-center rounded-md border-4">
+               <div v-if="!apiData[subcategory]" class="w-full h-[28.5rem] flex justify-center items-center rounded-md border-4">
                   <div>
                      <button
                         type="button"
