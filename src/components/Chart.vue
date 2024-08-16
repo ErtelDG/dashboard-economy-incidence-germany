@@ -6,8 +6,14 @@
                <div class="dropdown flex-col item-center w-full">
                   <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-sm">Kategorie</button>
                   <div class="dropdown-content w-full">
-                     <div v-for="(value, category) in chartCategories[0]" :key="category">
-                        <div v-if="category !== 'Datum'">
+                     <div v-for="(value, category) in chartCategories[10]" :key="category">
+                        <div
+                           v-if="
+                              category !== 'Datum' &&
+                              !isNaN(parseFloat(String(value).replace(',', '.'))) &&
+                              isFinite(parseFloat(String(value).replace(',', '.')))
+                           "
+                        >
                            <div class="break-words hyphens-auto text-xs">
                               <input type="radio" :id="`${category}@@@${subcategory}`" :value="category" v-model="chartFilter" />
                               <label :for="`${category}@@@${subcategory}`">{{ category }}</label>
