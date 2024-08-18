@@ -2,6 +2,7 @@
 import { ref, watch, onMounted, reactive } from "vue";
 import { useStore } from "vuex";
 import Chart from "./Chart.vue";
+import "../router";
 
 // Holen Sie sich den Store
 const store = useStore();
@@ -94,11 +95,37 @@ function toggleSidebar() {
                </svg>
             </button>
          </div>
-         <div class="flex items-center px-4 w-full">
-            <span v-if="selectedSubcategories.length === 0" class="text-white font-bold text-center w-full">Bitte eine Bereich auswählen.</span>
+         <div class="flex items-center w-full h-full">
+            <RouterLink
+               class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-full"
+               to="/LeadingIndicators"
+               >Frühindikatoren</RouterLink
+            >
+
+            <RouterLink
+               class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-full"
+               to="/PresenceIndicators"
+               >Präsenzindikatoren</RouterLink
+            >
+
+            <RouterLink
+               class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-full"
+               to="/LaggingIndicators"
+               >Spätindikatoren</RouterLink
+            >
+
+            <RouterLink
+               class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-full"
+               to="/LaggingIndicators"
+               >Spätindikatoren</RouterLink
+            >
+
+            <!--             <strong class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-full">{{
+               $route.fullPath
+            }}</strong> -->
          </div>
       </div>
-      <div class="overflow-scroll custom-height w-full h-[calc(100vh - 4rem)]">
+      <div class="overflow-scroll custom-height w-full">
          <div class="w-full h-full flex flex-wrap justify-around items-start px-2 py-4">
             <div v-for="subcategory in selectedSubcategories" :key="subcategory" class="mb-4 w-[48rem]">
                <Chart v-if="apiData[subcategory]" :subcategory="subcategory" :apiData="apiData[subcategory]" />
@@ -123,6 +150,9 @@ function toggleSidebar() {
                </div>
             </div>
             <div v-if="selectedSubcategories.length % 2 == 1" class="mb-4 w-[48rem]"></div>
+            <div v-if="selectedSubcategories.length === 0">
+               <RouterView />
+            </div>
          </div>
       </div>
    </div>
@@ -130,7 +160,7 @@ function toggleSidebar() {
 
 <style scoped>
 .custom-height {
-   height: calc(100vh - 4rem);
+   min-height: calc(100vh - 8rem);
    scrollbar-width: none;
 }
 </style>

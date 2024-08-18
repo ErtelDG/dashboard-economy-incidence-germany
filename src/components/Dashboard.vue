@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from "vue";
 import Sidebar from "./Sidebar.vue";
 import MainContent from "./MainContent.vue";
+import FooterView from "./FooterView.vue";
 </script>
 
 <template>
@@ -13,6 +13,7 @@ import MainContent from "./MainContent.vue";
       <!-- Main content -->
       <div class="w-full">
          <MainContent />
+         <FooterView />
       </div>
    </div>
 </template>

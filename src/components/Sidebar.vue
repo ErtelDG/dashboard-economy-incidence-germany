@@ -1,13 +1,15 @@
 <template>
    <!-- sidebar -->
-   <div 
+   <div
       :class="[
          'fixed over inset-y-0 left-0 w-80 bg-gray-800 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
          store.state.sidebarVisible ? 'translate-x-0' : '-translate-x-full',
       ]"
    >
-      <div class="flex items-center justify-between h-16 bg-gray-900 border-b border-gray-200">
-         <span class="text-white font-bold text-center w-full">Konjunkturindikatoren Deutschland</span>
+      <div class="flex items-center justify-between h-16 bg-gray-900 border-b border-r border-gray-200">
+         <RouterLink class="text-white font-bold px-4 py-4 w-full" to="/LaggingIndicators"
+            >Konjunkturindikatoren Deutschland</RouterLink
+         >
          <button @click="toggleSidebar" class="text-gray-500 focus:outline-none focus:text-gray-700 md:hidden px-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -15,8 +17,16 @@
          </button>
       </div>
       <div class="custom-height flex flex-col flex-1 overflow-scroll">
-         <div class="p-2">
-            <div class="flex flex-col flex-1 overflow-y-auto">
+         <div class="">
+            <div class="text-white font-semibold w-full px-4 py-4 border-b border-gray-200">
+               <div class="text-center">Optional: Für mehr Details:</div>
+               <div class="w-full flex justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+               </div>
+            </div>
+            <div class="flex flex-col flex-1 overflow-y-auto text-white">
                <nav class="flex-1 px-2 py-4 bg-gray-800">
                   <div v-for="(subcategories, category) in sortedCategories" :key="category">
                      <div class="text-white px-1 py-2">
@@ -25,14 +35,21 @@
                            <svg
                               v-if="isCategoryOpen(category)"
                               xmlns="http://www.w3.org/2000/svg"
-                              class="h-6 w-6"
+                              class="h-6 w-6 transition-transform duration-300 ease-in-out hover:scale-125"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
                            >
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6" />
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 15l-7-7-7 7" />
                            </svg>
-                           <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <svg
+                              v-else
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-6 w-6 transition-transform duration-300 ease-in-out hover:scale-125"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                           >
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                            </svg>
                         </button>
@@ -44,14 +61,21 @@
                                     <svg
                                        v-if="isSubcategoryOpen(subcategory)"
                                        xmlns="http://www.w3.org/2000/svg"
-                                       class="h-6 w-6"
+                                       class="h-6 w-6 transition-transform duration-300 ease-in-out hover:scale-125"
                                        fill="none"
                                        viewBox="0 0 24 24"
                                        stroke="currentColor"
                                     >
-                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6" />
+                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 15l-7-7-7 7" />
                                     </svg>
-                                    <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg
+                                       v-else
+                                       xmlns="http://www.w3.org/2000/svg"
+                                       class="h-6 w-6 transition-transform duration-300 ease-in-out hover:scale-125"
+                                       fill="none"
+                                       viewBox="0 0 24 24"
+                                       stroke="currentColor"
+                                    >
                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                                  </button>
@@ -63,7 +87,7 @@
                                              :value="item.id"
                                              :checked="isChecked(item.id)"
                                              @change="handleCheckboxChange(item.id)"
-                                             class="mr-3"
+                                             class="mr-3 hover:cursor-pointer"
                                           />
                                           {{ item.title }}
                                        </div>
