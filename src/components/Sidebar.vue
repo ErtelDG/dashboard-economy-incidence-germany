@@ -2,32 +2,14 @@
    <!-- sidebar -->
    <div
       :class="[
-         'fixed over inset-y-0 left-0 w-80 bg-gray-800 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
+         'fixed over inset-x-0 left-0 h-full w-80 bg-gray-800 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
          store.state.sidebarVisible ? 'translate-x-0' : '-translate-x-full',
       ]"
    >
-      <div class="flex items-center justify-between h-16 bg-gray-900 border-b border-r border-gray-200">
-         <RouterLink class="text-white font-bold px-4 py-4 w-full" to="/LaggingIndicators"
-            >Konjunkturindikatoren Deutschland</RouterLink
-         >
-         <button @click="toggleSidebar" class="text-gray-500 focus:outline-none focus:text-gray-700 md:hidden px-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-         </button>
-      </div>
-      <div class="custom-height flex flex-col flex-1 overflow-scroll">
+      <div class="custom-height flex flex-col flex-1 overflow-scroll px-2">
          <div class="">
-            <div class="text-white font-semibold w-full px-4 py-4 border-b border-gray-200">
-               <div class="text-center">Optional: Für mehr Details:</div>
-               <div class="w-full flex justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-               </div>
-            </div>
             <div class="flex flex-col flex-1 overflow-y-auto text-white">
-               <nav class="flex-1 px-2 py-4 bg-gray-800">
+               <nav class="flex-1 bg-gray-800">
                   <div v-for="(subcategories, category) in sortedCategories" :key="category">
                      <div class="text-white px-1 py-2">
                         <button @click="toggleCategory(category)" class="flex items-center justify-between w-full text-left">

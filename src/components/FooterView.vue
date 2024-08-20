@@ -1,5 +1,5 @@
 <template>
-   <div class="border-t border-gray-100 sm:flex sm:items-center sm:justify-between lg:mx-auto max-w-screen-xl w-full h-16 px-8">
+   <div class="border-t border-gray-300 sm:flex sm:items-center sm:justify-between lg:mx-auto w-full h-full w-full px-16">
       <ul class="flex flex-wrap justify-center gap-4 text-xs lg:justify-end">
          <RouterLink class="text-gray-500 transition hover:opacity-75" to="/Impressum"> Impressum </RouterLink>
          <RouterLink class="text-gray-500 transition hover:opacity-75" to="/PrivacyPolicy"> Datenschutzrichtlinie </RouterLink>

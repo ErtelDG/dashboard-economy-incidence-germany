@@ -86,47 +86,9 @@ function toggleSidebar() {
 </script>
 
 <template>
-   <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 relative w-full">
-      <div class="flex items-center justify-between h-16 border-b border-gray-200 bg-gray-900">
-         <div class="flex items-center px-4">
-            <button @click="toggleSidebar" class="text-gray-500 focus:outline-none focus:text-gray-700 md:hidden">
-               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-               </svg>
-            </button>
-         </div>
-         <div class="flex items-center w-full h-full">
-            <RouterLink
-               class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-full"
-               to="/LeadingIndicators"
-               >Frühindikatoren</RouterLink
-            >
-
-            <RouterLink
-               class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-full"
-               to="/PresenceIndicators"
-               >Präsenzindikatoren</RouterLink
-            >
-
-            <RouterLink
-               class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-full"
-               to="/LaggingIndicators"
-               >Spätindikatoren</RouterLink
-            >
-
-            <RouterLink
-               class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-full"
-               to="/LaggingIndicators"
-               >Spätindikatoren</RouterLink
-            >
-
-            <!--             <strong class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-full">{{
-               $route.fullPath
-            }}</strong> -->
-         </div>
-      </div>
-      <div class="overflow-scroll custom-height w-full">
-         <div class="w-full h-full flex flex-wrap justify-around items-start px-2 py-4">
+   <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 w-full relative">
+      <div class="w-full flex flex-col flex-1">
+         <div class="w-full h-full flex flex-wrap justify-around items-start px-2 py-4 custom-height overflow-hidden">
             <div v-for="subcategory in selectedSubcategories" :key="subcategory" class="mb-4 w-[48rem]">
                <Chart v-if="apiData[subcategory]" :subcategory="subcategory" :apiData="apiData[subcategory]" />
                <div v-if="!apiData[subcategory]" class="w-full h-[28.5rem] flex justify-center items-center rounded-md border-4">
@@ -159,8 +121,7 @@ function toggleSidebar() {
 </template>
 
 <style scoped>
-.custom-height {
-   min-height: calc(100vh - 8rem);
+.scrollbar-w-0 {
    scrollbar-width: none;
 }
 </style>
