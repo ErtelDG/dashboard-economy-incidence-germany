@@ -17,8 +17,8 @@
          </span>
          <div class="flex justify-center">
             <ul class="list-disc list-inside flex gap-24 text-xl font-semibold">
-               <li class="" v-for="(value, name, index) in Indicatore" :key="index">
-                  {{ value.indicator }}
+               <li class="hover:cursor-pointer hover:underline" v-for="(value, name, index) in Indicatore" :key="index">
+                  <RouterLink :to="value.link">{{ value.indicator }}</RouterLink>
                </li>
             </ul>
          </div>

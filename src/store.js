@@ -50,9 +50,10 @@ function transformAndSortSubcategory(data) {
 const store = createStore({
    state() {
       return {
+         selectedSubcategoriesGlobal: ref(10),
          sidebarVisible: ref(false),
          apiDataList: null,
-         selectedSubcategories: [],
+         selectedSubcategories: ref([]),
       };
    },
    mutations: {
@@ -61,10 +62,11 @@ const store = createStore({
       },
       updateSelectedSubcategories(state, selectedSubcategories) {
          state.selectedSubcategories = selectedSubcategories;
+         console.log(selectedSubcategories.length);
       },
       toggleSidebar(state) {
          state.sidebarVisible = !state.sidebarVisible;
-         },
+      },
    },
    actions: {
       fetchData(context) {
@@ -73,7 +75,7 @@ const store = createStore({
             redirect: "follow",
          };
 
-         fetch("https://economy-incidence-germany.denniscodeworld.de/list", requestOptions)
+         fetch("http://localhost:5600/list", requestOptions)
             .then((response) => response.json())
             .then((result) => {
                let sortResult = transformAndSortSubcategory(transformAndSortData(result));

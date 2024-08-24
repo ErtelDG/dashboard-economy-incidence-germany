@@ -11,7 +11,7 @@
             <div class="flex flex-col flex-1 overflow-y-auto text-white">
                <nav class="flex-1 bg-gray-800">
                   <div v-for="(subcategories, category) in sortedCategories" :key="category">
-                     <div class="text-white px-1 py-2">
+                     <div class="text-white px-1 py-2" to="/ChartContent">
                         <button @click="toggleCategory(category)" class="flex items-center justify-between w-full text-left">
                            {{ category }}
                            <svg
@@ -63,7 +63,7 @@
                                  </button>
                                  <div v-if="isSubcategoryOpen(subcategory)">
                                     <div v-for="item in items" :key="item.id">
-                                       <div class="text-white pl-4 py-2 flex items-center">
+                                       <div class="text-white pl-4 py-2 flex items-center hover:cursor-pointer">
                                           <input
                                              type="checkbox"
                                              :value="item.id"
