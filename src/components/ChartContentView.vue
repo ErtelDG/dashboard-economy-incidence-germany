@@ -115,7 +115,7 @@ function toggleSidebar() {
             <div v-if="selectedSubcategories.length % 2 == 1" class="mb-4 w-[48rem]"></div>
             <div v-if="selectedSubcategories.length === 0">
                <div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
-                  <strong class="block font-medium text-red-800"> Something went wrong </strong>
+                  <strong class="block font-medium text-red-800">Keine Kategorie ausgewählt.</strong>
 
                   <p class="mt-2 text-sm text-red-700">
                      Aktuell ist keine Kategorie ausgewählt. Bitte mindestens einen Kategorie auswählen, um einen Chart anzeigen zu lassen.

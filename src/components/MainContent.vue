@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch, onMounted, reactive } from "vue";
 import { useStore } from "vuex";
-import Chart from "./Chart.vue";
 import "../router";
 
 // Holen Sie sich den Store
