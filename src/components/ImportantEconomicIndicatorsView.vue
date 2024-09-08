@@ -12,7 +12,7 @@
 
          <span class="flex items-center pt-4">
             <span class="h-px flex-1 bg-gradient-to-r from-transparent to-black opacity-50"></span>
-            <h1 class="shrink-0 px-4 text-2xl font-bold py-4">Arten von Konjunkturindicatoren:</h1>
+            <h1 class="shrink-0 px-4 text-2xl font-bold py-4">Arten von Konjunkturindikatoren:</h1>
             <span class="h-px flex-1 bg-gradient-to-l from-transparent to-black opacity-50"></span>
          </span>
          <div class="flex justify-center">
