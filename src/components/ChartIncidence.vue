@@ -2,7 +2,22 @@
    <div class="w-full h-full flex items-center justify-center">
       <div v-if="indicatorData[props.indicatorID]" class="rounded-md border-4 w-full flex-col items-center p-2 scrollbar-w-0">
          <div class="flex w-full items-center justify-center py-2">
-            <div class="w-1/6 flex items-center justify-center"></div>
+            <div class="w-1/6 flex items-center justify-center">
+               <div class="dropdown flex-col item-center w-full">
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-sm">
+                     Zeitraum <br />
+                     {{ chartFilterDuration }} Jahre
+                  </button>
+                  <div class="dropdown-content w-full">
+                     <div v-for="value in chartCategories" :key="value">
+                        <div class="break-words hyphens-auto text-xs">
+                           <input type="radio" :id="`${canvasId}@@@${value}`" :value="value" v-model="chartFilterDuration" />
+                           <label :for="`${canvasId}@@@${value}`">{{ value }} Jahre</label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
             <div class="w-4/6 text-center font-bold text-wrap px-4">{{ indicatorData[props.indicatorID].title }}</div>
             <div class="w-1/6 flex items-center justify-center">
                <div v-if="chartData.datasets[0].data.every((element) => element != null)" class="dropdown flex-col item-center w-full">
@@ -48,6 +63,8 @@
 <script setup>
 import { ref, watch, computed, onMounted } from "vue";
 import Chart from "chart.js/auto";
+import { isProxy, toRaw } from "vue";
+
 
 // Track the current chart instance
 const myCharts = new Map(); // Use a Map to store multiple chart instances
@@ -60,9 +77,9 @@ const indicatorData = ref({
 });
 const chartType = ref("line");
 const canvasId = ref(null);
-const chartFilter = ref("");
+const chartFilterDuration = ref(5);
 const currApiDataChart = ref([]);
-const chartCategories = ref("1");
+const chartCategories = ref([3, 5, 7, 10, 15]);
 const chartData = ref({
    title: "",
    labels: [],
@@ -105,11 +122,28 @@ async function updateChart() {
          myCharts.get(canvasId.value).destroy();
          myCharts.delete(canvasId.value);
       }
-      console.log(indicatorData.value[canvasId.value]);
-      const hasNonNullNonUndefined = !indicatorData.value[canvasId.value].data.every((element) => element === null || element === undefined);
+      let rawData = indicatorData.value[canvasId.value]["data"];
+      if (isProxy(rawData)) {
+         rawData = toRaw(rawData);
+      }
+
+      const filterRowData = rawData.filter((item) => {
+         const dateString = item["Datum"];
+         const dateParts = dateString.split("/");
+         const dateObject = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+         const currentDate = new Date();
+         const lastYearsAgo = new Date();
+         let period = chartFilterDuration.value;
+
+         lastYearsAgo.setFullYear(currentDate.getFullYear() - period);
+         return dateObject >= lastYearsAgo;
+      });
+      console.log(filterRowData);
+
+      const hasNonNullNonUndefined = !filterRowData.every((element) => element === null || element === undefined);
 
       if (hasNonNullNonUndefined) {
-         indicatorData.value[canvasId.value].data.forEach((element, index, array) => {
+         filterRowData.forEach((element, index, array) => {
             if (typeof element === "string" && element.includes(",")) {
                let convertedElement = parseFloat(element.replace(",", "."));
                array[index] = convertedElement;
@@ -119,21 +153,19 @@ async function updateChart() {
          });
 
          let xDate = [];
-         let yData = [];
-         let yDataItems;
 
-         indicatorData.value[canvasId.value].data.forEach((oneDate) => {
+         filterRowData.forEach((oneDate) => {
             xDate.push(oneDate["Datum"]);
          });
          console.log(xDate);
 
-         const columns = Object.keys(indicatorData.value[canvasId.value].data[0]);
+         const columns = Object.keys(filterRowData[0]);
 
          // Erzeuge die Matrix, wobei die erste Zeile die Spaltennamen enthält
          const matrix = [columns];
 
          // Füge jede Datenzeile zur Matrix hinzu
-         indicatorData.value[canvasId.value].data.forEach((obj) => {
+         filterRowData.forEach((obj) => {
             const row = columns.map((column) => obj[column]);
             matrix.push(row);
          });
@@ -186,9 +218,15 @@ async function updateChart() {
                datasets: datasets, // Alle Datasets für die Indikatoren
             },
             options: {
+               scales: {
+                  x: {
+                     ticks: { maxTicksLimit: chartFilterDuration.value },
+                  },
+               },
                responsive: true,
                plugins: {
                   legend: {
+                     position: "bottom",
                      onClick: function (e, legendItem, legend) {
                         // Holen der aktuellen Sichtbarkeit des angeklickten Datensatzes
                         const ci = legend.chart;
@@ -219,37 +257,6 @@ async function updateChart() {
    }
 }
 
-// Watchers
-/* watch(chartFilter, (newFilter) => {
-   if (newFilter && currApiDataChart.value.data.length > 0) {
-      const labels = [];
-      const data = [];
-
-      currApiDataChart.value.data.forEach((element) => {
-         labels.push(element["Datum"]);
-         data.push(element[newFilter]);
-      });
-
-      chartData.value = {
-         ...chartData.value,
-         labels,
-         datasets: [
-            {
-               label: chartFilter,
-               data,
-            },
-         ],
-      };
-
-      updateChart();
-   }
-}); */
-
-// Hilfsfunktion für die Verzögerung
-/* function delay(ms) {
-   return new Promise((resolve) => setTimeout(resolve, ms));
-} */
-
 async function getIncidenceData(IncId) {
    try {
       const response = await fetch(`http://localhost:5600/data?id=${IncId}`);
@@ -268,6 +275,14 @@ async function getIncidenceData(IncId) {
       console.error("Fehler beim Abrufen der Daten:", error);
    }
 }
+
+watch(
+   () => chartFilterDuration.value,
+   (newValue) => {
+      updateChart();
+   },
+   { immediate: true }
+);
 
 watch(
    () => props.indicatorID,

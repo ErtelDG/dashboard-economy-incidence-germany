@@ -63,7 +63,9 @@ watch(
          let apiDataList = store.state.apiDataList;
          examples.forEach((element) => {
             let res = findObjectWithNameJson(apiDataList, element.nameJson);
-            indicatorsID.value.push(res.id);
+            if (res != null) {
+               indicatorsID.value.push(res.id);
+            }
          });
       } catch (error) {
          console.error(error);
