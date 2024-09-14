@@ -65,7 +65,6 @@ const store = createStore({
       },
       updateSelectedSubcategories(state, selectedSubcategories) {
          state.selectedSubcategories = selectedSubcategories;
-         console.log(selectedSubcategories.length);
       },
       toggleSidebar(state) {
          state.sidebarVisible = !state.sidebarVisible;

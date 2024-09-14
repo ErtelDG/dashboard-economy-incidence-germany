@@ -92,6 +92,7 @@ import { ref, computed, watch, onMounted } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
+const categories = ref([]);
 const sortedCategories = ref("");
 
 // Watch for changes in apiDataList
@@ -100,6 +101,14 @@ watch(
    (newData) => {
       if (newData) {
          sortedCategories.value = newData;
+      }
+      const sortedKeys = Object.keys(sortedCategories.value).sort();
+      const sortedObj = {};
+      if (sortedKeys != null && sortedObj != null) {
+         sortedKeys.forEach((key) => {
+            sortedObj[key] = sortedCategories.value[key];
+         });
+         sortedCategories.value = sortedObj;
       }
    },
    { immediate: true }
