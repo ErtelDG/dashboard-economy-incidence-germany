@@ -88,7 +88,11 @@ function toggleSidebar() {
    <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 w-full relative">
       <div class="w-full flex flex-col flex-1">
          <div class="w-full h-full flex flex-wrap justify-around items-start px-2 py-4 custom-height overflow-hidden">
-            <RouterView />
+            <router-view v-slot="{ Component }">
+               <keep-alive>
+                  <component :is="Component" />
+               </keep-alive>
+            </router-view>
          </div>
       </div>
    </div>

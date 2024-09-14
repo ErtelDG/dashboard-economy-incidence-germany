@@ -19,17 +19,12 @@ import { useStore } from "vuex";
 const store = useStore();
 const indicatorsID = ref([]);
 
-//data: Das JSON-Objekt, das durchsucht werden soll.
-//nameJsonValue: Der gesuchte Wert für den Schlüssel "nameJson".
 function findObjectWithNameJson(data, nameJsonValue) {
-   // Überprüfen, ob das aktuelle Objekt ein Objekt oder ein Array ist
    if (typeof data === "object" && data !== null) {
-      // Überprüfen, ob das aktuelle Objekt den Schlüssel "nameJson" enthält und der Wert übereinstimmt
       if (data.hasOwnProperty("nameJson") && data.nameJson === nameJsonValue) {
          return data;
       }
 
-      // Wenn es ein Objekt ist, iteriere über seine Schlüssel
       for (let key in data) {
          if (data.hasOwnProperty(key)) {
             let result = findObjectWithNameJson(data[key], nameJsonValue);
@@ -40,7 +35,6 @@ function findObjectWithNameJson(data, nameJsonValue) {
       }
    }
 
-   // Falls das aktuelle Objekt ein Array ist, iteriere über die Elemente
    if (Array.isArray(data)) {
       for (let item of data) {
          let result = findObjectWithNameJson(item, nameJsonValue);
@@ -50,7 +44,6 @@ function findObjectWithNameJson(data, nameJsonValue) {
       }
    }
 
-   // Rückgabe von null, wenn kein passendes Objekt gefunden wurde
    return null;
 }
 

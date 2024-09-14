@@ -4,7 +4,7 @@
          <div class="flex w-full items-center justify-center py-2">
             <div class="w-1/6 flex items-center justify-center">
                <div class="dropdown flex-col item-center w-full">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-sm">
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-sm rounded-md">
                      Zeitraum <br />
                      {{ chartFilterDuration }} Jahre
                   </button>
@@ -20,8 +20,11 @@
             </div>
             <div class="w-4/6 text-center font-bold text-wrap px-4">{{ indicatorData[props.indicatorID].title }}</div>
             <div class="w-1/6 flex items-center justify-center">
-               <div v-if="chartData.datasets[0].data.every((element) => element != null)" class="dropdown flex-col item-center w-full">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center text-sm">Diagrammtype</button>
+               <div v-if="chartType" class="dropdown flex-col item-center w-full">
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center text-sm rounded-md">
+                     Diagrammtype <br />
+                     {{ chartType.charAt(0).toUpperCase() + chartType.slice(1) }}
+                  </button>
                   <div class="dropdown-content w-full text-xs">
                      <a href="#" @click="selectChartType('line')">Line</a>
                      <a href="#" @click="selectChartType('bar')">Bar</a>
@@ -65,11 +68,8 @@ import { ref, watch, computed, onMounted } from "vue";
 import Chart from "chart.js/auto";
 import { isProxy, toRaw } from "vue";
 
+const myCharts = new Map();
 
-// Track the current chart instance
-const myCharts = new Map(); // Use a Map to store multiple chart instances
-
-// Reactive references
 const indicatorData = ref({
    title: "",
    labels: [],
@@ -86,7 +86,6 @@ const chartData = ref({
    datasets: [{ type: "", label: "", data: [null] }],
 });
 
-// Props to receive API data
 const props = defineProps({
    indicatorID: {
       type: String,
@@ -94,7 +93,6 @@ const props = defineProps({
    },
 });
 
-// Computed property for subcategory
 const currentSubcategory = computed(() => props.subcategory);
 
 watch(chartType, (newValue) => {
@@ -102,12 +100,10 @@ watch(chartType, (newValue) => {
    updateChart();
 });
 
-// Hilfsfunktion für die Verzögerung
 function delay(ms) {
    return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// Function to initialize and update the chart
 async function updateChart() {
    let chartElement = null;
 
@@ -115,9 +111,7 @@ async function updateChart() {
       chartElement = document.getElementById(canvasId.value);
       await delay(100);
    }
-   console.log(chartElement);
    if (chartElement) {
-      // Destroy the old chart if it exists
       if (myCharts.has(canvasId.value)) {
          myCharts.get(canvasId.value).destroy();
          myCharts.delete(canvasId.value);
@@ -138,7 +132,6 @@ async function updateChart() {
          lastYearsAgo.setFullYear(currentDate.getFullYear() - period);
          return dateObject >= lastYearsAgo;
       });
-      console.log(filterRowData);
 
       const hasNonNullNonUndefined = !filterRowData.every((element) => element === null || element === undefined);
 
@@ -157,65 +150,54 @@ async function updateChart() {
          filterRowData.forEach((oneDate) => {
             xDate.push(oneDate["Datum"]);
          });
-         console.log(xDate);
 
          const columns = Object.keys(filterRowData[0]);
 
-         // Erzeuge die Matrix, wobei die erste Zeile die Spaltennamen enthält
          const matrix = [columns];
 
-         // Füge jede Datenzeile zur Matrix hinzu
          filterRowData.forEach((obj) => {
             const row = columns.map((column) => obj[column]);
             matrix.push(row);
          });
 
-         // Extrahiere die Spaltennamen
          const headers = matrix[0];
 
-         // Extrahiere die Datumswerte (x-Achse Labels)
          xDate = matrix.slice(1).map((row) => row[0]);
 
-         // Erstelle ein Dataset für jeden Indikator (außer 'Datum', also ab Index 1)
          const datasets = headers.slice(1).map((header, index) => {
-            // index + 1, da der erste Index 0 die "Datum"-Spalte ist
             const data = matrix.slice(1).map((row) => row[index + 1]);
 
             return {
-               label: header, // Der Name des Indikators
-               data: data, // Die Werte für diesen Indikator
+               label: header,
+               data: data,
                pointRadius: 2,
                pointHoverRadius: 5,
-               fill: false, // Damit die Linien nicht gefüllt sind (falls es ein Liniendiagramm ist)
+               fill: false,
             };
          });
 
-         // Wähle den Datensatz, der am Anfang sichtbar sein soll (z.B. der erste Datensatz)
-         const initialVisibleDatasetIndex = 0; // Zeige nur den ersten Datensatz
+         const initialVisibleDatasetIndex = 0;
 
-         // Setze die anderen Datensätze auf 'hidden' bei der Initialisierung
          datasets.forEach((dataset, index) => {
             if (index !== initialVisibleDatasetIndex) {
-               dataset.hidden = true; // Verstecke alle Datensätze außer dem ersten
+               dataset.hidden = true;
             }
          });
 
-         // Wandle alle Komma-Werte in Zahlen mit Punkt um und speichere sie als Floats
          datasets.forEach((dataset) => {
             dataset.data = dataset.data.map((value) => {
                if (typeof value === "string") {
-                  // Ersetze Komma durch Punkt und konvertiere zu Float
                   return parseFloat(value.replace(",", "."));
                }
-               return value; // Wenn es schon eine Zahl ist, nichts ändern
+               return value;
             });
          });
 
          const newChart = new Chart(chartElement, {
-            type: chartType.value, // Der Diagrammtyp (z.B. 'line')
+            type: chartType.value,
             data: {
-               labels: xDate, // Die x-Achse (Datumswerte)
-               datasets: datasets, // Alle Datasets für die Indikatoren
+               labels: xDate,
+               datasets: datasets,
             },
             options: {
                scales: {
@@ -228,22 +210,17 @@ async function updateChart() {
                   legend: {
                      position: "bottom",
                      onClick: function (e, legendItem, legend) {
-                        // Holen der aktuellen Sichtbarkeit des angeklickten Datensatzes
                         const ci = legend.chart;
                         const index = legendItem.datasetIndex;
 
-                        // Setze alle Datensätze auf unsichtbar
                         ci.data.datasets.forEach(function (dataset, i) {
                            if (i === index) {
-                              // Zeige den angeklickten Datensatz
                               dataset.hidden = false;
                            } else {
-                              // Verstecke alle anderen Datensätze
                               dataset.hidden = true;
                            }
                         });
 
-                        // Aktualisiere den Chart
                         ci.update();
                      },
                   },
@@ -251,7 +228,6 @@ async function updateChart() {
             },
          });
 
-         // Store the new chart instance
          myCharts.set(canvasId.value, newChart);
       }
    }
@@ -261,6 +237,23 @@ async function getIncidenceData(IncId) {
    try {
       const response = await fetch(`http://localhost:5600/data?id=${IncId}`);
       const data = await response.json();
+
+      const keysToCheck = Object.keys(data.data[0]);
+      let keysToRemove = [];
+
+      keysToCheck.forEach((key) => {
+         const allNull = data.data.every((entry) => entry[key] === null);
+         if (allNull) {
+            keysToRemove.push(key);
+         }
+      });
+
+      data.data.forEach((entry) => {
+         keysToRemove.forEach((key) => {
+            delete entry[key];
+         });
+      });
+
       Object.keys(data.data).forEach((element) => {
          Object.keys(data.data[element]).forEach((element2) => {
             if (element2.includes("VerÃ¤nderung") || element2.includes("gegenÃ¼ber")) {
@@ -270,7 +263,19 @@ async function getIncidenceData(IncId) {
             }
          });
       });
-      indicatorData.value[IncId] = data; // Speichern Sie die Daten im reaktiven Objekt
+
+      data.data = data.data.map((entry) => {
+         if (entry.hasOwnProperty("Datum")) {
+            let newEntry = { Datum: entry["Datum"] };
+            delete entry["Datum"];
+            return { ...newEntry, ...entry };
+         }
+         return entry;
+      });
+      let cleanedText = data.title.replace("(Öffnet neues Fenster)", "").trim();
+      data.title = cleanedText;
+
+      indicatorData.value[IncId] = data;
    } catch (error) {
       console.error("Fehler beim Abrufen der Daten:", error);
    }
@@ -284,32 +289,13 @@ watch(
    { immediate: true }
 );
 
-watch(
-   () => props.indicatorID,
-   async (newData) => {
-      console.log(newData);
-      //canvasId.value = `${newData.category}-${newData.id}`;
-      //chartData.value.title = newData.title;
-      //chartCategories.value = newData.data;
-      //currApiDataChart.value = newData;
-
-      //if (!chartFilter.value) {
-      //   chartFilter.value = chartCategories.value[0];
-      //}
-
-      // updateChart();
-   },
-   { immediate: true }
-);
-
 onMounted(async () => {
    while (props.indicatorID == (null || undefined)) {
-      console.log("Warte auf daten"); // Sollte in der Schleife ausgeführt werden
-      await delay(2000); // Wartezeit
+      console.log("Warte auf daten");
+      await delay(2000);
    }
    canvasId.value = props.indicatorID;
    await getIncidenceData(props.indicatorID);
-   console.log(indicatorData.value);
    updateChart();
 });
 
