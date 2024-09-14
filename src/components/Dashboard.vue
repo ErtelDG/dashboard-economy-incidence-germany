@@ -14,9 +14,9 @@ import FooterView from "./FooterView.vue";
 
       <div class="w-full flex main-content-heigt-to-vh">
          <!-- sidebar -->
-         <div class="w-80 h-full">
+         <!--    <div class="w-80 h-full">
             <Sidebar />
-         </div>
+         </div> -->
          <!-- Main content -->
          <div class="w-full main-content-heigt-to-vh">
             <div class="main-content"><MainContent /></div>

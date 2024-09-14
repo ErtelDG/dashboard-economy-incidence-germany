@@ -10,28 +10,16 @@
             </svg>
          </button>
       </div>
-      <RouterLink class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-80" to="/"
-         >Konjunkturindikatoren Deutschland</RouterLink
-      >
-      <div class="flex items-center justify-center h-full text-white font-bold text-center">
+      <div class="flex items-center justify-center w-full h-full text-white font-bold text-center">
          <RouterLink
-            v-for="item in NavData"
+            v-for="item in navData"
             :key="item[1]"
             :to="item[1]"
-            class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center "
-            :class="store.state.selectedSubcategories.length === 0 ? 'nav-links-3ele' : 'nav-links-4ele'"
+            class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center w-1/5"
             active-class="bg-gray-700"
             exact-active-class="bg-gray-900"
          >
             {{ item[0] }}
-         </RouterLink>
-         <RouterLink
-            v-if="store.state.selectedSubcategories.length > 0"
-            class="hover:bg-gray-500 hover:cursor-pointer flex items-center justify-center h-full text-white font-bold text-center nav-links-4ele"
-            active-class="bg-gray-700"
-            exact-active-class="bg-gray-900"
-            to="/ChartContent"         >
-            {{ store.state.selectedSubcategories.length }} Charts ausgewählt
          </RouterLink>
       </div>
    </div>
@@ -39,10 +27,12 @@
 
 <script setup>
 import { useStore } from "vuex";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 // Daten für die Navigation
-const NavData = ref([
+const navData = ref([
+   ["Indikatoren", "/"],
+   ["Einzelne Indikatoren Deutschland", "/ChartContent"],
    ["Frühindikatoren", "/LeadingIndicators"],
    ["Präsenzindikatoren", "/PresenceIndicators"],
    ["Spätindikatoren", "/LaggingIndicators"],

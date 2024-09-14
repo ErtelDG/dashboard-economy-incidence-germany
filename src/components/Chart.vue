@@ -4,7 +4,7 @@
          <div class="flex w-full items-center justify-center py-2">
             <div class="w-1/6 flex items-center justify-center">
                <div class="dropdown flex-col item-center w-full">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-sm">Kategorie</button>
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-sm rounded-md">Kategorie</button>
                   <div class="dropdown-content w-full">
                      <div v-for="(value, category) in chartCategories[10]" :key="category">
                         <div
@@ -26,7 +26,7 @@
             <div class="w-4/6 text-center font-bold text-wrap px-4">{{ chartData.title }}</div>
             <div class="w-1/6 flex items-center justify-center">
                <div v-if="chartData.datasets[0].data.every((element) => element != null)" class="dropdown flex-col item-center w-full">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center text-sm">Diagrammtype</button>
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center text-sm rounded-md">Diagrammtype</button>
                   <div class="dropdown-content w-full text-xs">
                      <a href="#" @click="selectChartType('line')">Line</a>
                      <a href="#" @click="selectChartType('bar')">Bar</a>

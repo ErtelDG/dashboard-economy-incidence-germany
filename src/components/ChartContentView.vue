@@ -84,9 +84,15 @@ onMounted(() => {
 function toggleSidebar() {
    store.commit("toggleSidebar");
 }
+
+import Sidebar from "./Sidebar.vue";
 </script>
 
 <template>
+   <!-- sidebar -->
+   <div class="w-80 h-full">
+      <Sidebar />
+   </div>
    <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 w-full relative">
       <div class="w-full flex flex-col flex-1">
          <div class="w-full h-full flex flex-wrap justify-around items-start px-2 py-4 custom-height overflow-hidden">
@@ -113,15 +119,15 @@ function toggleSidebar() {
                </div>
             </div>
             <div v-if="selectedSubcategories.length % 2 == 1" class="mb-4 w-[48rem]"></div>
-            <div v-if="selectedSubcategories.length === 0">
+            <div v-if="selectedSubcategories.length === 0" class="pt-8">
                <div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
                   <strong class="block font-medium text-red-800">Keine Kategorie ausgewählt.</strong>
 
                   <p class="mt-2 text-sm text-red-700">
-                     Aktuell ist keine Kategorie ausgewählt. Bitte mindestens einen Kategorie auswählen, um einen Chart anzeigen zu lassen.
+                     Aktuell ist keine Kategorie ausgewählt. <br />
+                     Bitte mindestens einen Kategorie auswählen, um einen Chart anzeigen zu lassen.
                   </p>
                </div>
-               
             </div>
          </div>
       </div>
