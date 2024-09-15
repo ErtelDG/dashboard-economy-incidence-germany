@@ -2,7 +2,7 @@
    <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 w-full relative">
       <div class="w-full flex flex-col flex-1">
          <div class="w-full h-full flex flex-wrap justify-around items-start px-2 py-4 custom-height overflow-hidden">
-            <div v-for="indicatorID in indicatorsID" :key="indicatorID" class="mb-4 w-[48rem]">
+            <div v-for="indicatorID in indicatorsID" :key="indicatorID" class="mb-4 w-full md:w-[48rem]">
                <ChartIncidence :indicatorID="indicatorID" />
             </div>
             <div v-if="indicatorsID.length % 2 == 1" class="mb-4 w-[48rem]"></div>

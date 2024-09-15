@@ -18,6 +18,7 @@ import { useStore } from "vuex";
 
 const store = useStore();
 const indicatorsID = ref([]);
+const watchStoreIndicator = ref(store.state.indicatore);
 
 function findObjectWithNameJson(data, nameJsonValue) {
    if (typeof data === "object" && data !== null) {
@@ -48,7 +49,7 @@ function findObjectWithNameJson(data, nameJsonValue) {
 }
 
 watch(
-   () => store.state.indicatore,
+   () => watchStoreIndicator.value,
    (newData, oldData) => {
       try {
          let examples = newData.presenceIndicators.example;

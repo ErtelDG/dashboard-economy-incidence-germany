@@ -1,6 +1,6 @@
 <template>
    <div class="w-full h-full flex items-center justify-center">
-      <div v-if="indicatorData[props.indicatorID]" class="rounded-md border-4 w-full flex-col items-center p-2 scrollbar-w-0">
+      <div v-if="indicatorData[props.indicatorID]" class="rounded-md border-4 w-full flex-col items-center p-2 scrollbar-w-0 md:text-base text-xs">
          <div class="flex w-full items-center justify-center py-2">
             <div class="w-1/6 flex items-center justify-center">
                <div class="dropdown flex-col item-center w-full">
@@ -32,6 +32,34 @@
                </div>
             </div>
          </div>
+         <!--    <div class="hidden flex w-full items-center justify-around py-2">
+            <div class="w-2/6 flex items-center justify-center">
+               <div class="dropdown flex-col item-center w-full">
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full rounded-md">
+                     Zeitraum {{ chartFilterDuration }} Jahre
+                  </button>
+                  <div class="dropdown-content w-full">
+                     <div v-for="value in chartCategories" :key="value">
+                        <div class="break-words hyphens-auto text-xs">
+                           <input type="radio" :id="`${canvasId}@@@${value}`" :value="value" v-model="chartFilterDuration" />
+                           <label :for="`${canvasId}@@@${value}`">{{ value }} Jahre</label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="w-2/6 flex items-center justify-center">
+               <div v-if="chartType" class="dropdown flex-col item-center w-full">
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center rounded-md">
+                     Diagrammtype {{ chartType.charAt(0).toUpperCase() + chartType.slice(1) }}
+                  </button>
+                  <div class="dropdown-content w-full text-xs">
+                     <a href="#" @click="selectChartType('line')">Line</a>
+                     <a href="#" @click="selectChartType('bar')">Bar</a>
+                  </div>
+               </div>
+            </div>
+         </div> -->
          <div class="flex items-center w-full">
             <div class="flex aspect-[2/1] w-full border-gray-200 p-2 justify-center relative">
                <div class="w-full">
@@ -208,6 +236,7 @@ async function updateChart() {
                responsive: true,
                plugins: {
                   legend: {
+                     labels: { font: { size: "10px" } },
                      position: "bottom",
                      onClick: function (e, legendItem, legend) {
                         const ci = legend.chart;

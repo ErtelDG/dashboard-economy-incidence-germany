@@ -31,8 +31,8 @@ import { ref, watch } from "vue";
 
 // Daten für die Navigation
 const navData = ref([
-   ["Indikatoren", "/"],
    ["Einzelne Indikatoren Deutschland", "/ChartContent"],
+   ["Indikatoren", "/"],
    ["Frühindikatoren", "/LeadingIndicators"],
    ["Präsenzindikatoren", "/PresenceIndicators"],
    ["Spätindikatoren", "/LaggingIndicators"],
