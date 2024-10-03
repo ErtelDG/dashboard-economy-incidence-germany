@@ -2,10 +2,13 @@
    <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 w-full relative">
       <div class="w-full flex flex-col flex-1">
          <div class="w-full h-full flex flex-wrap justify-around items-start px-2 py-4 custom-height overflow-hidden">
-            <div v-for="indicatorID in indicatorsID" :key="indicatorID" class="mb-4 w-full md:w-[48rem]">
+            <div v-if="indicatorsID.length == 0" class="w-full h-[28.5rem] flex justify-center items-center">
+               <PlsWait></PlsWait>
+            </div>
+            <div v-for="indicatorID in indicatorsID" :key="indicatorID" class="mb-4 w-11/12 sm:w-[48rem]">
                <ChartIncidence :indicatorID="indicatorID" />
             </div>
-            <div v-if="indicatorsID.length % 2 == 1" class="mb-4 w-[48rem]"></div>
+            <div v-if="indicatorsID.length % 2 == 1" class="mb-4 w-full sm:w-[48rem]"></div>
          </div>
       </div>
    </div>
@@ -14,10 +17,12 @@
 <script setup>
 import { ref, watch } from "vue";
 import ChartIncidence from "./ChartIncidence.vue";
+import PlsWait from "./PlsWait.vue";
 import { useStore } from "vuex";
 
 const store = useStore();
 const indicatorsID = ref([]);
+const watchStoreIndicator = ref(store.state.indicatore);
 
 function findObjectWithNameJson(data, nameJsonValue) {
    if (typeof data === "object" && data !== null) {
@@ -48,12 +53,30 @@ function findObjectWithNameJson(data, nameJsonValue) {
 }
 
 watch(
-   () => store.state.indicatore,
-   (newData, oldData) => {
+   () => watchStoreIndicator.value,
+   async (newData, oldData) => {
       try {
+         store.dispatch("fetchData");
          let examples = newData.leadingIndicators.example;
          indicatorsID.value = [];
+
+         let maxWaitTime = 10000; // 10 Sekunden
+         let intervalTime = 2000; // 2 Sekunden
+         let elapsedTime = 0;
+
          let apiDataList = store.state.apiDataList;
+
+         while (apiDataList == null && elapsedTime < maxWaitTime) {
+            await new Promise((resolve) => setTimeout(resolve, intervalTime));
+            apiDataList = store.state.apiDataList;
+            elapsedTime += intervalTime;
+         }
+
+         if (apiDataList == null) {
+            console.warn("apiDataList nach 10 Sekunden noch null!");
+            return;
+         }
+
          examples.forEach((element) => {
             let res = findObjectWithNameJson(apiDataList, element.nameJson);
             if (res != null) {

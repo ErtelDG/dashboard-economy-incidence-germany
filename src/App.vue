@@ -24,17 +24,17 @@ onUnmounted(() => {
 
 <template id="rotate-message" style="display: none">
    <div>
-      <div v-if="isPortrait" id="rotate-message" class="w-screen h-screen">
+      <!--       <div v-if="!isPortrait" id="rotate-message" class="w-screen h-screen">
          <p class="p-8">Bitte drehen Sie Ihr Gerät ins Querformat, um das Dashboard und die Diagramme optimal anzuzeigen.</p>
          <div class="phone">
             <div class="screen"></div>
          </div>
       </div>
-      <div v-else>
-         <div class="w-full h-full">
-            <Dashboard></Dashboard>
-         </div>
+      <div v-else> -->
+      <div class="w-full h-full">
+         <Dashboard></Dashboard>
       </div>
+      <!-- </div> -->
    </div>
 </template>
 
