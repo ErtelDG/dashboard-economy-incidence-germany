@@ -2,7 +2,7 @@
    <!-- sidebar -->
    <div
       :class="[
-         'fixed over inset-x-0 left-0 h-full w-80 bg-gray-800 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
+         'fixed over inset-x-0 z-10 left-0 h-full w-80 bg-gray-800 transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 lg:z-0',
          store.state.sidebarVisible ? 'translate-x-0' : '-translate-x-full',
       ]"
    >

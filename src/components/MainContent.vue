@@ -88,7 +88,7 @@ function toggleSidebar() {
 <template>
    <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 w-full relative">
       <div class="w-full flex flex-col flex-1">
-         <div class="w-full h-full flex flex-wrap justify-around items-start custom-height overflow-hidden">
+         <div class="w-full h-full flex flex-wrap items-start custom-height overflow-hidden">
             <router-view v-slot="{ Component }">
                <keep-alive>
                   <component :is="Component" />
