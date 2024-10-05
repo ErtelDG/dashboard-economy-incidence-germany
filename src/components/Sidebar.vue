@@ -2,7 +2,7 @@
    <!-- sidebar -->
    <div
       :class="[
-         'fixed over inset-x-0 z-10 left-0 h-full w-80 bg-gray-800 transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 lg:z-0 custom-height',
+         'fixed over inset-x-0 z-10 left-0 min-h-full w-80 bg-gray-800 transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 lg:z-0 custom-height',
          store.state.sidebarVisible ? 'translate-x-0' : '-translate-x-64',
       ]"
    >
@@ -205,7 +205,6 @@ const handleCheckboxChange = (id) => {
 </script>
 <style scoped>
 .custom-height {
-   height: calc(100vh - 8rem);
    scrollbar-width: none;
 }
 

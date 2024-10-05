@@ -1,5 +1,5 @@
 <template>
-   <div class="w-full h-full flex items-center justify-center">
+   <div class="w-full h-full flex items-start justify-center">
       <div v-if="chartCategories[0]" class="rounded-md border-4 w-full flex-col items-center p-2 scrollbar-w-0">
          <div class="flex w-full items-center justify-center py-2">
             <div class="w-1/6 flex items-center justify-center">
@@ -115,13 +115,13 @@ const fontSize = ref(16);
 setInterval(() => {
    let size = window.innerWidth;
    if (size >= 1920) {
-      fontSize.value = 16;
-   } else if (size >= 1080) {
       fontSize.value = 14;
-   } else if (size >= 720) {
+   } else if (size >= 1080) {
       fontSize.value = 12;
-   } else {
+   } else if (size >= 720) {
       fontSize.value = 10;
+   } else {
+      fontSize.value = 8;
    }
 }, 1000);
 

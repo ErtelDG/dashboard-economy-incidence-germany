@@ -1,11 +1,11 @@
 <template>
    <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 w-full relative">
       <div class="w-full flex flex-col flex-1">
-         <div class="w-full h-full flex flex-wrap justify-around items-start px-2 py-4 custom-height overflow-hidden">
+         <div class="w-full h-full flex flex-wrap justify-center gap-x-16 gap-y-8 items-start px-2 py-4 custom-height overflow-hidden">
             <div v-if="indicatorsID.length == 0" class="w-full h-[28.5rem] flex justify-center items-center">
                <PlsWait></PlsWait>
             </div>
-            <div v-for="indicatorID in indicatorsID" :key="indicatorID" class="mb-4 w-11/12   sm:w-[48rem]">
+            <div v-for="indicatorID in indicatorsID" :key="indicatorID" class="my-4 w-11/12 sm:w-[48rem]">
                <ChartIncidence :indicatorID="indicatorID" />
             </div>
             <div v-if="indicatorsID.length % 2 == 1" class="mb-4 w-full sm:w-[48rem]"></div>
