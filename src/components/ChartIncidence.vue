@@ -253,7 +253,7 @@ async function updateChart() {
             return {
                label: header,
                data: data,
-               pointRadius: 2,
+               pointRadius: 1,
                pointHoverRadius: 5,
                fill: false,
             };

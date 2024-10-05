@@ -90,18 +90,13 @@ import Sidebar from "./Sidebar.vue";
 
 <template>
    <!-- sidebar -->
-   <div class="flex">
+   <div class="flex w-full">
       <Sidebar />
 
       <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 w-full relative">
-         <div class="w-full flex flex-col items-center flex-1">
-            <div
-               :class="[
-                  'w-full h-full flex flex-wrap  px-2 py-4 custom-height overflow-hidden',
-                  selectedSubcategories.length === 0 ? 'items-start justify-center' : 'justify-around items-start',
-               ]"
-            >
-               <div v-for="subcategory in selectedSubcategories" :key="subcategory" class="mb-4 w-[48rem]">
+         <div class="w-full flex flex-col justify-center items-center flex-1">
+            <div class="w-full h-full flex flex-wrap px-2 py-4 custom-height overflow-hidden justify-center">
+               <div v-for="subcategory in selectedSubcategories" :key="subcategory" class="mb-4 md:w-[48rem]">
                   <Chart v-if="apiData[subcategory]" :subcategory="subcategory" :apiData="apiData[subcategory]" />
                   <div v-if="!apiData[subcategory]" class="w-full h-[28.5rem] flex justify-center items-center rounded-md border-4">
                      <div>
@@ -124,13 +119,13 @@ import Sidebar from "./Sidebar.vue";
                   </div>
                </div>
                <div v-if="selectedSubcategories.length % 2 == 1" class="mb-4 w-[48rem]"></div>
-               <div v-if="selectedSubcategories.length === 0" class="pt-8 w-4/5 flex justify-center">
+               <div v-if="selectedSubcategories.length === 0" class="pt-8 max-w-[48rem] flex flex-col">
                   <div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4 w-full">
                      <strong class="block font-medium text-red-800">Keine Kategorie ausgewählt.</strong>
 
                      <div class="mt-2 text-sm text-red-700">
                         <p>Aktuell ist keine Kategorie ausgewählt.</p>
-                        <p class="lg:hidden block underline">Links oben über das Menü Icon!</p>
+                        <p class="lg:hidden block">← Links über das Menü Icon!</p>
                         <p>Bitte mindestens einen Kategorie auswählen, um einen Chart anzeigen zu lassen.</p>
                      </div>
                   </div>

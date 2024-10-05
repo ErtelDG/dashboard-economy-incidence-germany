@@ -24,7 +24,7 @@
                </div>
             </div>
             <div class="w-4/6 text-center font-bold text-wrap px-4">{{ chartData.title }}</div>
-            <div class="w-1/6 flex items-center justify-center">
+            <!--  <div class="w-1/6 flex items-center justify-center">
                <div v-if="chartData.datasets[0].data.every((element) => element != null)" class="dropdown flex-col item-center w-full">
                   <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center text-sm rounded-md">Diagrammtype</button>
                   <div class="dropdown-content w-full text-xs">
@@ -32,6 +32,43 @@
                      <a href="#" @click="selectChartType('bar')">Bar</a>
                   </div>
                </div>
+            </div> -->
+            <div class="w-1/6 flex items-center justify-center">
+               <div v-if="chartType" class="flex items-center justify-center gap-x-2 w-full">
+                  <!-- Line Chart Symbol -->
+                  <div
+                     @click="selectChartType('line')"
+                     :class="['rounded-md border cursor-pointer', chartType === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
+                     class="flex justify-center items-center w-8 h-8"
+                  >
+                     <!-- Icon for Line Chart (you can replace this with an actual icon) -->
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4/5 h-4/5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12l4 4L19 7" />
+                     </svg>
+                  </div>
+
+                  <!-- Bar Chart Symbol -->
+                  <div
+                     @click="selectChartType('bar')"
+                     :class="['rounded-md border cursor-pointer', chartType === 'bar' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
+                     class="flex justify-center items-center w-8 h-8"
+                  >
+                     <!-- Icon for Bar Chart (small, fitting within w-2 h-2) -->
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4/5 h-4/5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h4v10H3V10zm7-5h4v15h-4V5zm7 8h4v7h-4v-7z" />
+                     </svg>
+                  </div>
+               </div>
+
+               <!--               <div v-if="chartType" class="dropdown flex-col item-center w-full">
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center text-sm rounded-md">
+                     {{ chartType.charAt(0).toUpperCase() + chartType.slice(1) }}
+                  </button>
+                  <div class="dropdown-content w-full text-xs">
+                     <a href="#" @click="selectChartType('line')">Line</a>
+                     <a href="#" @click="selectChartType('bar')">Bar</a>
+                  </div>
+               </div> -->
             </div>
          </div>
          <div class="flex items-center w-full">
@@ -71,6 +108,25 @@ const chartData = ref({
    title: "",
    labels: [],
    datasets: [{ type: "", label: "", data: [null] }],
+});
+
+const fontSize = ref(16);
+
+setInterval(() => {
+   let size = window.innerWidth;
+   if (size >= 1920) {
+      fontSize.value = 16;
+   } else if (size >= 1080) {
+      fontSize.value = 14;
+   } else if (size >= 720) {
+      fontSize.value = 12;
+   } else {
+      fontSize.value = 10;
+   }
+}, 1000);
+
+watch(fontSize, () => {
+   updateChart();
 });
 
 // Computed property for subcategory
@@ -117,10 +173,51 @@ async function updateChart() {
                   {
                      label: chartData.value.datasets[0].label,
                      data: chartData.value.datasets[0].data,
-                     pointRadius: 2,
+                     pointRadius: 1,
                      pointHoverRadius: 5,
+                     fill: false,
                   },
                ],
+            },
+            options: {
+               maintainAspectRatio: false,
+               responsive: true,
+               scales: {
+                  x: {
+                     ticks: {
+                        padding: 8,
+                        align: "center",
+                        maxTicksLimit: 6,
+                        autoSkip: true, // Automatisches Überspringen von Ticks aktivieren
+                        maxRotation: 0, // Maximal 0 Grad Rotation (horizontal)
+                        minRotation: 0, // Minimal 0 Grad Rotation (horizontal)
+                        font: {
+                           size: fontSize.value,
+                        },
+                     },
+                  },
+                  y: {
+                     ticks: {
+                        padding: 4,
+                        font: {
+                           size: fontSize.value,
+                        },
+                     },
+                  },
+               },
+               plugins: {
+                  legend: {
+                     display: false, // Deaktiviert die Standardlegende von Chart.js
+                  },
+               },
+               layout: {
+                  padding: {
+                     left: window.innerWidth * 0.01,
+                     right: window.innerWidth * 0.01,
+                     top: window.innerHeight * 0.02,
+                     bottom: window.innerHeight * 0.02,
+                  },
+               },
             },
          });
 
