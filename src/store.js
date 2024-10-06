@@ -13,7 +13,6 @@ function transformAndSortData(data) {
       result[category][item.nameJson] = item;
    });
 
-   // Sort the objects within each category
    for (const category in result) {
       result[category] = Object.fromEntries(Object.entries(result[category]).sort(([a], [b]) => a.localeCompare(b)));
    }
@@ -77,7 +76,7 @@ const store = createStore({
             redirect: "follow",
          };
 
-         fetch("http://localhost:5600/list", requestOptions)
+         fetch("https://economy-incidence-germany.denniscodeworld.de/list", requestOptions)
             .then((response) => response.json())
             .then((result) => {
                let sortResult = transformAndSortSubcategory(transformAndSortData(result));

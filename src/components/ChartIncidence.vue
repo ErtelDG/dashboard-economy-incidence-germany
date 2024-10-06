@@ -10,13 +10,12 @@
                   :class="[
                      'w-1/3 h-8 cursor-pointer text-center text-xs flex items-center justify-center',
                      chartFilterDuration === value ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black',
-                     index === 0 ? 'rounded-l-md' : '', // Abrunden der linken Box
-                     index === chartCategories.length - 1 ? 'rounded-r-md' : '', // Abrunden der rechten Box
+                     index === 0 ? 'rounded-l-md' : '',
+                     index === chartCategories.length - 1 ? 'rounded-r-md' : '',
                   ]"
                >
-                  <!-- Input radio (visually hidden) -->
                   <input type="radio" :id="`${canvasId}@@@${value}`" :value="value" v-model="chartFilterDuration" class="hidden" />
-                  <!-- Label showing the years -->
+
                   <label
                      :for="`${canvasId}@@@${value}`"
                      :class="[
@@ -32,70 +31,29 @@
             <div class="w-4/6 text-center font-bold text-wrap px-2">{{ indicatorData[props.indicatorID].title }}</div>
             <div class="w-1/6 flex items-center justify-center">
                <div v-if="chartType" class="flex items-center justify-center gap-x-2 w-full">
-                  <!-- Line Chart Symbol -->
                   <div
                      @click="selectChartType('line')"
                      :class="['rounded-md border cursor-pointer', chartType === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
                      class="flex justify-center items-center w-8 h-8"
                   >
-                     <!-- Icon for Line Chart (you can replace this with an actual icon) -->
                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4/5 h-4/5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M4 14l4-5 5 5 6-9" />
                      </svg>
                   </div>
 
-                  <!-- Bar Chart Symbol -->
                   <div
                      @click="selectChartType('bar')"
                      :class="['rounded-md border cursor-pointer', chartType === 'bar' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
                      class="flex justify-center items-center w-8 h-8"
                   >
-                     <!-- Icon for Bar Chart (small, fitting within w-2 h-2) -->
                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4/5 h-4/5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h4v10H3V10zm7-5h4v15h-4V5zm7 8h4v7h-4v-7z" />
                      </svg>
                   </div>
                </div>
-
-               <!--               <div v-if="chartType" class="dropdown flex-col item-center w-full">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center text-sm rounded-md">
-                     {{ chartType.charAt(0).toUpperCase() + chartType.slice(1) }}
-                  </button>
-                  <div class="dropdown-content w-full text-xs">
-                     <a href="#" @click="selectChartType('line')">Line</a>
-                     <a href="#" @click="selectChartType('bar')">Bar</a>
-                  </div>
-               </div> -->
             </div>
          </div>
-         <!--    <div class="hidden flex w-full items-center justify-around py-2">
-            <div class="w-2/6 flex items-center justify-center">
-               <div class="dropdown flex-col item-center w-full">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full rounded-md">
-                     Zeitraum {{ chartFilterDuration }} Jahre
-                  </button>
-                  <div class="dropdown-content w-full">
-                     <div v-for="value in chartCategories" :key="value">
-                        <div class="break-words hyphens-auto text-xs">
-                           <input type="radio" :id="`${canvasId}@@@${value}`" :value="value" v-model="chartFilterDuration" />
-                           <label :for="`${canvasId}@@@${value}`">{{ value }} Jahre</label>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="w-2/6 flex items-center justify-center">
-               <div v-if="chartType" class="dropdown flex-col item-center w-full">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center rounded-md">
-                     Diagrammtype {{ chartType.charAt(0).toUpperCase() + chartType.slice(1) }}
-                  </button>
-                  <div class="dropdown-content w-full text-xs">
-                     <a href="#" @click="selectChartType('line')">Line</a>
-                     <a href="#" @click="selectChartType('bar')">Bar</a>
-                  </div>
-               </div>
-            </div>
-         </div> -->
+
          <div class="flex items-center w-full">
             <div class="flex aspect-[2/1] w-full border-gray-200 justify-center relative">
                <div class="w-full">
@@ -136,7 +94,7 @@ const myCharts = new Map();
 
 const indicatorData = ref({
    title: "",
-   data: [], // Leere Struktur initialisieren
+   data: [],
    datasets: [{ label: "", data: [null] }],
 });
 const chartType = ref("line");
@@ -260,7 +218,7 @@ async function updateChart() {
 
          datasets.forEach((dataset, index) => {
             if (index !== initialVisibleDatasetIndex) {
-               dataset.hidden = true; // Verberge alle außer den ersten Datensatz
+               dataset.hidden = true;
             }
          });
 
@@ -288,9 +246,9 @@ async function updateChart() {
                         padding: 8,
                         align: "center",
                         maxTicksLimit: 6,
-                        autoSkip: true, // Automatisches Überspringen von Ticks aktivieren
-                        maxRotation: 0, // Maximal 0 Grad Rotation (horizontal)
-                        minRotation: 0, // Minimal 0 Grad Rotation (horizontal)
+                        autoSkip: true,
+                        maxRotation: 0,
+                        minRotation: 0,
                         font: {
                            size: fontSize.value,
                         },
@@ -307,7 +265,7 @@ async function updateChart() {
                },
                plugins: {
                   legend: {
-                     display: false, // Deaktiviert die Standardlegende von Chart.js
+                     display: false,
                   },
                },
                layout: {
@@ -322,17 +280,13 @@ async function updateChart() {
          });
 
          myCharts.set(canvasId.value, newChart);
-
-         /*          // Update the custom legend dropdown
-         updateLegendDropdown(datasets); */
       }
    }
 }
 
-// Funktion, um Dropdown-Optionen für die Legende zu aktualisieren
 function updateLegendDropdown(datasets) {
    const dropdown = document.getElementById("chartLegendDropdown");
-   dropdown.innerHTML = `<option value="">Wähle eine Legende aus</option>`; // Leeren Dropdown
+   dropdown.innerHTML = `<option value="">Wähle eine Legende aus</option>`;
 
    datasets.forEach((dataset, index) => {
       const option = document.createElement("option");
@@ -342,22 +296,9 @@ function updateLegendDropdown(datasets) {
    });
 }
 
-// Funktion, um die Sichtbarkeit der Datensätze basierend auf der Dropdown-Auswahl zu steuern
-function updateChartDatasetVisibility(selectElement) {
-   const chart = myCharts.get(canvasId.value);
-   const selectedIndex = selectElement.value;
-
-   if (chart && selectedIndex !== "") {
-      chart.data.datasets.forEach((dataset, index) => {
-         dataset.hidden = index !== parseInt(selectedIndex);
-      });
-      chart.update();
-   }
-}
-
 async function getIncidenceData(IncId) {
    try {
-      const response = await fetch(`http://localhost:5600/data?id=${IncId}`);
+      const response = await fetch(`https://economy-incidence-germany.denniscodeworld.de/data?id=${IncId}`);
       const data = await response.json();
 
       const keysToCheck = Object.keys(data.data[0]);
@@ -436,12 +377,10 @@ tr:nth-child(even) {
    scrollbar-width: none;
 }
 
-/* The container <div> - needed to position the dropdown content */
 .dropdown {
    position: relative;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content {
    display: none;
    position: absolute;
@@ -451,7 +390,6 @@ tr:nth-child(even) {
    border-radius: 0.25rem;
 }
 
-/* Links inside the dropdown */
 .dropdown-content a,
 .dropdown-content label {
    color: black;
@@ -460,13 +398,11 @@ tr:nth-child(even) {
    padding: 0.5rem;
 }
 
-/* Change color of dropdown links on hover */
 .dropdown-content a:hover,
 .dropdown-content label:hover {
    background-color: #f1f1f1;
 }
 
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
    display: block;
 }

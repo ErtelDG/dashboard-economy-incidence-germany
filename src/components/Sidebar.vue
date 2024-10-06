@@ -1,5 +1,4 @@
 <template>
-   <!-- sidebar -->
    <div
       :class="[
          'inset-x-0 left-0 h-full  bg-gray-800 transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 lg:z-0',
@@ -121,7 +120,6 @@ const store = useStore();
 const categories = ref([]);
 const sortedCategories = ref("");
 
-// Watch for changes in apiDataList
 watch(
    () => store.getters.apiDataList,
    (newData) => {
@@ -140,24 +138,19 @@ watch(
    { immediate: true }
 );
 
-// Dispatch fetchData action on component mount
 onMounted(() => {
    store.dispatch("fetchData");
 });
 
-// Emits definieren
 const emit = defineEmits(["toggle-sidebar"]);
 
-// Methode zum Umschalten der Sidebar-Sichtbarkeit
 function toggleSidebar() {
    store.commit("toggleSidebar");
 }
 
-// Verfolgung der offenen Kategorien und Subkategorien
 const openCategories = ref(new Set());
 const openSubcategories = ref(new Set());
 
-// Methode zum Umschalten der Kategorie
 const toggleCategory = (category) => {
    if (openCategories.value.has(category)) {
       openCategories.value.delete(category);
@@ -166,7 +159,6 @@ const toggleCategory = (category) => {
    }
 };
 
-// Methode zum Umschalten der Subkategorie
 const toggleSubcategory = (subcategory) => {
    if (openSubcategories.value.has(subcategory)) {
       openSubcategories.value.delete(subcategory);
@@ -175,7 +167,6 @@ const toggleSubcategory = (subcategory) => {
    }
 };
 
-// Überprüfen, ob eine Kategorie/Subkategorie geöffnet ist
 const isCategoryOpen = (category) => {
    return openCategories.value.has(category);
 };
@@ -184,20 +175,16 @@ const isSubcategoryOpen = (subcategory) => {
    return openSubcategories.value.has(subcategory);
 };
 
-// Methode zum Überprüfen, ob eine ID ausgewählt ist
 const isChecked = (id) => {
    return store.getters.selectedSubcategories.includes(id);
 };
 
-// Methode zum Verarbeiten von Checkbox-Änderungen
 const handleCheckboxChange = (id) => {
    const selectedSubcategories = [...store.getters.selectedSubcategories];
    const index = selectedSubcategories.indexOf(id);
    if (index === -1) {
-      // ID ist nicht im Array, hinzufügen
       selectedSubcategories.push(id);
    } else {
-      // ID ist im Array, entfernen
       selectedSubcategories.splice(index, 1);
    }
    store.commit("updateSelectedSubcategories", selectedSubcategories);

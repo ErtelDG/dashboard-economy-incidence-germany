@@ -60,8 +60,8 @@ watch(
          let examples = newData.leadingIndicators.example;
          indicatorsID.value = [];
 
-         let maxWaitTime = 10000; // 10 Sekunden
-         let intervalTime = 2000; // 2 Sekunden
+         let maxWaitTime = 10000; 
+         let intervalTime = 2000;
          let elapsedTime = 0;
 
          let apiDataList = store.state.apiDataList;

@@ -24,51 +24,29 @@
                </div>
             </div>
             <div class="w-4/6 text-center font-bold text-wrap px-4">{{ chartData.title }}</div>
-            <!--  <div class="w-1/6 flex items-center justify-center">
-               <div v-if="chartData.datasets[0].data.every((element) => element != null)" class="dropdown flex-col item-center w-full">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center text-sm rounded-md">Diagrammtype</button>
-                  <div class="dropdown-content w-full text-xs">
-                     <a href="#" @click="selectChartType('line')">Line</a>
-                     <a href="#" @click="selectChartType('bar')">Bar</a>
-                  </div>
-               </div>
-            </div> -->
+
             <div class="w-1/6 flex items-center justify-center">
                <div v-if="chartType" class="flex items-center justify-center gap-x-2 w-full">
-                  <!-- Line Chart Symbol -->
                   <div
                      @click="selectChartType('line')"
                      :class="['rounded-md border cursor-pointer', chartType === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
                      class="flex justify-center items-center w-8 h-8"
                   >
-                     <!-- Icon for Line Chart (you can replace this with an actual icon) -->
                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4/5 h-4/5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M4 14l4-5 5 5 6-9" />
                      </svg>
                   </div>
 
-                  <!-- Bar Chart Symbol -->
                   <div
                      @click="selectChartType('bar')"
                      :class="['rounded-md border cursor-pointer', chartType === 'bar' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
                      class="flex justify-center items-center w-8 h-8"
                   >
-                     <!-- Icon for Bar Chart (small, fitting within w-2 h-2) -->
                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4/5 h-4/5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h4v10H3V10zm7-5h4v15h-4V5zm7 8h4v7h-4v-7z" />
                      </svg>
                   </div>
                </div>
-
-               <!--               <div v-if="chartType" class="dropdown flex-col item-center w-full">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-center text-sm rounded-md">
-                     {{ chartType.charAt(0).toUpperCase() + chartType.slice(1) }}
-                  </button>
-                  <div class="dropdown-content w-full text-xs">
-                     <a href="#" @click="selectChartType('line')">Line</a>
-                     <a href="#" @click="selectChartType('bar')">Bar</a>
-                  </div>
-               </div> -->
             </div>
          </div>
          <div class="flex items-center w-full">
@@ -95,10 +73,8 @@
 import { ref, watch, computed, onMounted } from "vue";
 import Chart from "chart.js/auto";
 
-// Track the current chart instance
-const myCharts = new Map(); // Use a Map to store multiple chart instances
+const myCharts = new Map();
 
-// Reactive references
 const chartType = ref("line");
 const canvasId = ref(null);
 const chartFilter = ref("");
@@ -121,7 +97,6 @@ watch(fontSize, () => {
    updateChart();
 });
 
-// Computed property for subcategory
 const currentSubcategory = computed(() => props.subcategory);
 
 watch(chartType, (newValue) => {
@@ -129,7 +104,6 @@ watch(chartType, (newValue) => {
    updateChart();
 });
 
-// Function to initialize and update the chart
 async function updateChart() {
    let chartElement = null;
 
@@ -139,7 +113,6 @@ async function updateChart() {
    }
 
    if (chartElement) {
-      // Destroy the old chart if it exists
       if (myCharts.has(canvasId.value)) {
          myCharts.get(canvasId.value).destroy();
          myCharts.delete(canvasId.value);
@@ -156,7 +129,6 @@ async function updateChart() {
             }
          });
 
-         // Create a new chart
          const newChart = new Chart(chartElement, {
             type: chartType.value,
             data: {
@@ -180,9 +152,9 @@ async function updateChart() {
                         padding: 8,
                         align: "center",
                         maxTicksLimit: 6,
-                        autoSkip: true, // Automatisches Überspringen von Ticks aktivieren
-                        maxRotation: 0, // Maximal 0 Grad Rotation (horizontal)
-                        minRotation: 0, // Minimal 0 Grad Rotation (horizontal)
+                        autoSkip: true,
+                        maxRotation: 0,
+                        minRotation: 0,
                         font: {
                            size: fontSize.value,
                         },
@@ -199,7 +171,7 @@ async function updateChart() {
                },
                plugins: {
                   legend: {
-                     display: false, // Deaktiviert die Standardlegende von Chart.js
+                     display: false,
                   },
                },
                layout: {
@@ -213,13 +185,11 @@ async function updateChart() {
             },
          });
 
-         // Store the new chart instance
          myCharts.set(canvasId.value, newChart);
       }
    }
 }
 
-// Props to receive API data
 const props = defineProps({
    subcategory: {
       type: String,
@@ -231,7 +201,6 @@ const props = defineProps({
    },
 });
 
-// Watchers
 watch(chartFilter, (newFilter) => {
    if (newFilter && currApiDataChart.value.data.length > 0) {
       const labels = [];
@@ -257,7 +226,6 @@ watch(chartFilter, (newFilter) => {
    }
 });
 
-// Hilfsfunktion für die Verzögerung
 function delay(ms) {
    return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -284,8 +252,7 @@ watch(
 
 onMounted(async () => {
    while (Object.keys(props.apiData).length <= 0 && props.apiData.id == (null || undefined)) {
-      console.log("Warte auf daten"); // Sollte in der Schleife ausgeführt werden
-      await delay(2000); // Wartezeit
+      await delay(2000);
    }
 
    updateChart();
@@ -306,12 +273,10 @@ tr:nth-child(even) {
    scrollbar-width: none;
 }
 
-/* The container <div> - needed to position the dropdown content */
 .dropdown {
    position: relative;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content {
    display: none;
    position: absolute;
@@ -320,7 +285,6 @@ tr:nth-child(even) {
    z-index: 1;
 }
 
-/* Links inside the dropdown */
 .dropdown-content a,
 .dropdown-content label {
    color: black;
@@ -329,23 +293,19 @@ tr:nth-child(even) {
    padding: 0.5rem;
 }
 
-/* Change color of dropdown links on hover */
 .dropdown-content a:hover,
 .dropdown-content label:hover {
    background-color: #f1f1f1;
 }
 
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
    display: block;
 }
 
-/* Hide radio buttons */
 input[type="radio"] {
    display: none;
 }
 
-/* Style labels to look like links */
 label {
    cursor: pointer;
    color: black;
@@ -354,12 +314,10 @@ label {
    padding: 0.5rem;
 }
 
-/* Change color of labels on hover */
 label:hover {
    background-color: #f1f1f1;
 }
 
-/* Change color of selected label */
 input[type="radio"]:checked + label {
    background-color: #ddd;
 }

@@ -1,5 +1,4 @@
 <template>
-   <!-- Navigation Links -->
    <div class="flex items-center justify-between h-full border-b border-gray-200 bg-gray-900 w-full">
       <div class="flex items-center justify-center w-full h-full text-white font-bold text-center text-base md:text-lg">
          <RouterLink
@@ -26,7 +25,6 @@
 import { useStore } from "vuex";
 import { ref, watch } from "vue";
 
-// Daten für die Navigation
 const navData = ref([
    ["Individuelle Indikatoren Deutschland", "/ChartContent", "Individuelle", "Indikatoren GER"],
    ["Indikatoren", "/", "Indikatoren"],
@@ -35,13 +33,7 @@ const navData = ref([
    ["Spätindikatoren", "/LaggingIndicators", "Spät-", "indikatoren"],
 ]);
 
-// Zugriff auf den Vuex-Store
 const store = useStore();
-
-// Methode zum Umschalten der Sidebar
-function toggleSidebar() {
-   store.commit("toggleSidebar");
-}
 </script>
 
 <style scoped>
