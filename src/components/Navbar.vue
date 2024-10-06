@@ -7,7 +7,7 @@
             :key="item[1]"
             :to="item[1]"
             :class="['hover:bg-gray-500 hover:cursor-pointer w-full h-full text-white font-bold text-center']"
-            @click="navigate"
+           
             v-slot="{ isActive, href, navigate }"
          >
             <div :class="['h-full w-full flex items-center justify-center', isActive ? 'bg-gray-700' : '', `w-1/${navData.length}`]">
