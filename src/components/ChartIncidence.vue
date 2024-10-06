@@ -298,7 +298,7 @@ function updateLegendDropdown(datasets) {
 
 async function getIncidenceData(IncId) {
    try {
-      const response = await fetch(`https://economy-incidence-germany.denniscodeworld.de/data?id=${IncId}`);
+      const response = await fetch(`https://backend-economy-incidence-germany.denniscodeworld.de/data?id=${IncId}`);
       const data = await response.json();
 
       const keysToCheck = Object.keys(data.data[0]);

@@ -76,7 +76,7 @@ const store = createStore({
             redirect: "follow",
          };
 
-         fetch("https://economy-incidence-germany.denniscodeworld.de/list", requestOptions)
+         fetch("https://backend-economy-incidence-germany.denniscodeworld.de/list", requestOptions)
             .then((response) => response.json())
             .then((result) => {
                let sortResult = transformAndSortSubcategory(transformAndSortData(result));
