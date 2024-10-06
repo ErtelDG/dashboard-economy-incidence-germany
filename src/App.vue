@@ -22,32 +22,13 @@ onUnmounted(() => {
 });
 </script>
 
-<template id="rotate-message" style="display: none">
-   <div>
-      <!--       <div v-if="!isPortrait" id="rotate-message" class="w-screen h-screen">
-         <p class="p-8">Bitte drehen Sie Ihr Gerät ins Querformat, um das Dashboard und die Diagramme optimal anzuzeigen.</p>
-         <div class="phone">
-            <div class="screen"></div>
-         </div>
-      </div>
-      <div v-else> -->
-      <div class="w-full h-full">
-         <Dashboard></Dashboard>
-      </div>
-      <!-- </div> -->
+<template style="display: none">
+   <div class="w-screen h-screen">
+      <Dashboard></Dashboard>
    </div>
 </template>
 
 <style scoped>
-#rotate-message {
-   display: block;
-   text-align: center;
-   background-color: lightyellow;
-   padding: 20px;
-   font-size: 18px;
-   color: red;
-}
-
 /* Handy-Container */
 .phone {
    width: 100px;

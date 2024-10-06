@@ -2,14 +2,14 @@
    <!-- sidebar -->
    <div
       :class="[
-         'fixed over inset-x-0 z-10 left-0 min-h-full w-80 bg-gray-800 transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 lg:z-0 custom-height',
-         store.state.sidebarVisible ? 'translate-x-0' : '-translate-x-64',
+         'inset-x-0 left-0 h-full  bg-gray-800 transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 lg:z-0 custom-height',
+         store.state.sidebarVisible ? 'translate-x-0 w-80' : 'w-16',
       ]"
    >
-      <div class="custom-height flex flex-col flex-1">
+      <div class="scrollbar-width-noneflex flex-col flex-1 relative">
          <div
             :class="[
-               'w-full flex  justify-end hover:cursor-pointer hover:bg-gray-700',
+               'absolute z-10 top-0 w-full flex  justify-end hover:cursor-pointer hover:bg-gray-700',
                store.state.sidebarVisible ? 'bg-gray-700 border-b border-gray-200' : 'bg-gray-900',
             ]"
             @click="toggleSidebar"
@@ -27,11 +27,11 @@
                </div>
             </div>
          </div>
-         <div class="px-2 overflow-scroll scrollbar-width-none">
-            <div class="flex flex-col flex-1 overflow-y-auto text-white">
+         <div class="px-2 py-4 heigt-scroll scrollbar-width-none overflow-y-auto">
+            <div class="flex flex-col flex-1">
                <nav class="flex-1 bg-gray-800">
                   <div v-for="(subcategories, category) in sortedCategories" :key="category">
-                     <div class="text-white px-1 py-2" to="/ChartContent">
+                     <div :class="['px-1 py-2', store.state.sidebarVisible ? 'text-white' : 'hidden']" to="/ChartContent">
                         <button
                            @click="toggleCategory(category)"
                            :class="[' items-center justify-between w-full text-left', store.state.sidebarVisible ? 'flex' : 'lg:flex hidden']"
@@ -60,7 +60,7 @@
                         </button>
                         <div v-if="isCategoryOpen(category)">
                            <div v-for="(items, subcategory) in subcategories" :key="subcategory">
-                              <div class="text-white pl-4 py-2">
+                              <div :class="['pl-4 py-2']">
                                  <button
                                     @click="toggleSubcategory(subcategory)"
                                     :class="['flex items-center justify-between w-full text-left', store.state.sidebarVisible ? 'flex' : 'lg:flex hidden']"
@@ -89,7 +89,7 @@
                                  </button>
                                  <div v-if="isSubcategoryOpen(subcategory)">
                                     <div v-for="item in items" :key="item.id">
-                                       <div class="text-white pl-4 py-2 flex items-center hover:cursor-pointer">
+                                       <div :class="['pl-4 py-2 flex items-center hover:cursor-pointer']">
                                           <input
                                              type="checkbox"
                                              :value="item.id"
@@ -204,11 +204,11 @@ const handleCheckboxChange = (id) => {
 };
 </script>
 <style scoped>
-.custom-height {
+.scrollbar-width-none {
    scrollbar-width: none;
 }
 
-.scrollbar-width-none {
-   scrollbar-width: none;
+.heigt-scroll {
+   height: calc(100vh - 8rem);
 }
 </style>

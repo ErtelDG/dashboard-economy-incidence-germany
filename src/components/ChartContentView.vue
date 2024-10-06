@@ -89,8 +89,10 @@ import Sidebar from "./Sidebar.vue";
 </script>
 
 <template>
-   <div class="flex w-full">
-      <Sidebar />
+   <div class="flex w-full h-full">
+      <div class="h-full">
+         <Sidebar />
+      </div>
       <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 w-full relative">
          <div class="w-full flex flex-wrap px-2 py-4 overflow-hidden justify-center gap-x-4">
             <div v-for="subcategory in selectedSubcategories" :key="subcategory" class="mb-4 md:w-[48rem]">
