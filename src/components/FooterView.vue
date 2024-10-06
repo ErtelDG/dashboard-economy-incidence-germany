@@ -7,7 +7,12 @@
 
       <ul class="flex justify-center gap-6 lg:justify-end">
          <li>
-            <a href="#" rel="noreferrer" target="_blank" class="text-gray-700 transition hover:opacity-75">
+            <a
+               href="https://www.linkedin.com/in/dennis-georg-ertel-71b000260?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B3zR7%2BsT1TSeo3WQCi32C2g%3D%3D"
+               rel="noreferrer"
+               target="_blank"
+               class="text-gray-700 transition hover:opacity-75"
+            >
                <span class="sr-only">LinkedIn</span>
 
                <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -21,7 +26,7 @@
          </li>
 
          <li>
-            <a href="#" rel="noreferrer" target="_blank" class="text-gray-700 transition hover:opacity-75">
+            <a href="https://github.com/ErtelDG" rel="noreferrer" target="_blank" class="text-gray-700 transition hover:opacity-75">
                <span class="sr-only">GitHub</span>
 
                <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

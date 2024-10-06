@@ -150,19 +150,16 @@ const chartData = ref({
    datasets: [{ type: "", label: "", data: [null] }],
 });
 
-const fontSize = ref(16);
+const fontSize = ref();
+
+onMounted(() => {
+   let size = window.innerWidth;
+   fontSize.value = size >= 1920 ? 14 : size >= 1080 ? 12 : size >= 720 ? 10 : 8;
+});
 
 setInterval(() => {
    let size = window.innerWidth;
-   if (size >= 1920) {
-      fontSize.value = 14;
-   } else if (size >= 1080) {
-      fontSize.value = 12;
-   } else if (size >= 720) {
-      fontSize.value = 10;
-   } else {
-      fontSize.value = 8;
-   }
+   fontSize.value = size >= 1920 ? 14 : size >= 1080 ? 12 : size >= 720 ? 10 : 8;
 }, 1000);
 
 watch(fontSize, () => {
