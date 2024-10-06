@@ -119,13 +119,12 @@ import Sidebar from "./Sidebar.vue";
             </div>
             <div v-if="selectedSubcategories.length % 2 == 1" class="mb-4 w-[48rem]"></div>
             <div v-if="selectedSubcategories.length === 0" class="pt-8 max-w-[48rem] flex flex-col">
-               <div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4 w-full">
+               <div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4 max-w-96">
                   <strong class="block font-medium text-red-800">Keine Kategorie ausgewählt.</strong>
 
                   <div class="mt-2 text-sm text-red-700">
-                     <p>Aktuell ist keine Kategorie ausgewählt.</p>
-                     <p class="lg:hidden block">← Links über das Menü Icon!</p>
-                     <p>Bitte mindestens einen Kategorie auswählen, um einen Chart anzeigen zu lassen.</p>
+                     <p class="py-2">Bitte mindestens einen Kategorie auswählen, um einen Chart anzeigen zu lassen.</p>
+                     <p class="lg:hidden block py-2">← Links über das Menü Icon!</p>
                   </div>
                </div>
             </div>

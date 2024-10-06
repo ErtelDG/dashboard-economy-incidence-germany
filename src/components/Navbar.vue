@@ -11,7 +11,11 @@
             v-slot="{ isActive, href, navigate }"
          >
             <div :class="['h-full w-full flex items-center justify-center', isActive ? 'bg-gray-700' : '', `w-1/${navData.length}`]">
-               {{ item[0] }}
+               <div class="hidden sm:block">{{ item[0] }}</div>
+               <div class="sm:hidden block text-sm">
+                  <div>{{ item[2] }}</div>
+                  <div>{{ item[3] }}</div>
+               </div>
             </div>
          </RouterLink>
       </div>
@@ -24,11 +28,11 @@ import { ref, watch } from "vue";
 
 // Daten für die Navigation
 const navData = ref([
-   ["Einzelne Indikatoren Deutschland", "/ChartContent"],
-   ["Indikatoren", "/"],
-   ["Frühindikatoren", "/LeadingIndicators"],
-   ["Präsenzindikatoren", "/PresenceIndicators"],
-   ["Spätindikatoren", "/LaggingIndicators"],
+   ["Individuelle Indikatoren Deutschland", "/ChartContent", "Individuelle", "Indikatoren GER"],
+   ["Indikatoren", "/", "Indikatoren"],
+   ["Frühindikatoren", "/LeadingIndicators", "Früh-", "indikatoren"],
+   ["Präsenzindikatoren", "/PresenceIndicators", "Präsenz-", "indikatoren"],
+   ["Spätindikatoren", "/LaggingIndicators", "Spät-", "indikatoren"],
 ]);
 
 // Zugriff auf den Vuex-Store

@@ -1,6 +1,6 @@
 <template>
    <div class="w-full h-full flex items-start justify-center">
-      <div v-if="chartCategories[0]" class="rounded-md border-4 w-full flex-col items-center p-2 scrollbar-w-0">
+      <div v-if="chartCategories[0]" class="rounded-md border-4 w-11/12 sm:w-full flex-col items-center p-2 scrollbar-w-0">
          <div class="flex w-full items-center justify-center py-2">
             <div class="w-1/6 flex items-center justify-center">
                <div class="dropdown flex-col item-center w-full">
@@ -78,7 +78,7 @@
                   class="text-center flex items-center justify-center font-bold absolute inset-0"
                >
                   <div class="flex items-center px-4 py-2 shadow rounded-md text-white bg-gray-800">
-                     Bitte eine Kategorie auswählen um Chart anzeigen zu lassen ...
+                     &#8593; Bitte Kategorie auswählen um Chart anzeigen zu lassen.
                   </div>
                </div>
                <div class="w-full">

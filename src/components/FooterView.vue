@@ -1,11 +1,11 @@
 <template>
-   <div class="border-t border-gray-300 sm:flex sm:items-center sm:justify-between lg:mx-auto w-full h-full w-full px-16">
+   <div class="border-t border-gray-300 flex items-center justify-between lg:mx-auto w-full h-full px-16">
       <ul class="flex flex-wrap justify-center gap-4 text-xs lg:justify-end">
          <RouterLink class="text-gray-500 transition hover:opacity-75" to="/Impressum"> Impressum </RouterLink>
          <RouterLink class="text-gray-500 transition hover:opacity-75" to="/PrivacyPolicy"> Datenschutzrichtlinie </RouterLink>
       </ul>
 
-      <ul class="mt-8 flex justify-center gap-6 sm:mt-0 lg:justify-end">
+      <ul class="flex justify-center gap-6 lg:justify-end">
          <li>
             <a href="#" rel="noreferrer" target="_blank" class="text-gray-700 transition hover:opacity-75">
                <span class="sr-only">LinkedIn</span>

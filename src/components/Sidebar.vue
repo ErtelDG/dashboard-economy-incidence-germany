@@ -2,8 +2,8 @@
    <!-- sidebar -->
    <div
       :class="[
-         'inset-x-0 left-0 h-full  bg-gray-800 transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 lg:z-0 custom-height',
-         store.state.sidebarVisible ? 'translate-x-0 w-80' : 'w-16',
+         'inset-x-0 left-0 h-full  bg-gray-800 transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 lg:z-0',
+         store.state.sidebarVisible ? 'translate-x-0 w-80' : 'lg:w-80 w-16',
       ]"
    >
       <div class="scrollbar-width-noneflex flex-col flex-1 relative">
@@ -31,7 +31,7 @@
             <div class="flex flex-col flex-1">
                <nav class="flex-1 bg-gray-800">
                   <div v-for="(subcategories, category) in sortedCategories" :key="category">
-                     <div :class="['px-1 py-2', store.state.sidebarVisible ? 'text-white' : 'hidden']" to="/ChartContent">
+                     <div :class="['px-1 py-2', store.state.sidebarVisible ? 'text-white' : 'hidden lg:block lg:text-white']" to="/ChartContent">
                         <button
                            @click="toggleCategory(category)"
                            :class="[' items-center justify-between w-full text-left', store.state.sidebarVisible ? 'flex' : 'lg:flex hidden']"
