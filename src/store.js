@@ -71,18 +71,22 @@ const store = createStore({
    },
    actions: {
       fetchData(context) {
-         var requestOptions = {
-            method: "GET",
-            redirect: "follow",
-         };
-
-         fetch("https://backend-economy-incidence-germany.denniscodeworld.de/list", requestOptions)
-            .then((response) => response.json())
+         fetch("https://economy-dashboard-germany.denniscodeworld.de/api/list")
+            .then((response) => {
+               if (!response.ok) {
+                  throw new Error("Network response was not ok");
+               }
+               return response.json();
+            })
             .then((result) => {
                let sortResult = transformAndSortSubcategory(transformAndSortData(result));
                context.commit("setApiData", sortResult);
             })
-            .catch((error) => console.log("error", error));
+            .catch((error) => {
+               console.error("Fetch error:", error);
+               // Optionale Fehlerbehandlung z.B. Zeige eine Fehlermeldung im UI an
+               context.commit("setApiError", error.message);
+            });
       },
    },
    getters: {

@@ -22,7 +22,7 @@ const apiData = reactive({});
 
 const fetchData = async (id) => {
    try {
-      const response = await fetch(`https://backend-economy-incidence-germany.denniscodeworld.de/data?id=${id}`);
+      const response = await fetch(`https://economy-dashboard-germany.denniscodeworld.de/api/data?id=${id}`);
       const data = await response.json();
       Object.keys(data.data).forEach((element) => {
          Object.keys(data.data[element]).forEach((element2) => {
