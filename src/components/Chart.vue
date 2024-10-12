@@ -4,7 +4,7 @@
          <div class="flex w-full items-center justify-center py-2">
             <div class="w-1/6 flex items-center justify-center">
                <div class="dropdown flex-col item-center w-full">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 sm:w-full rounded-md">Kategorie</button>
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 sm:p-2 w-full rounded-md text-center h-6 sm:h-8">Klasse</button>
                   <div class="dropdown-content sm:w-full rounded-md h-40 sm:h-72 overflow-scroll scrollbar-w-0">
                      <div v-for="(value, category) in chartCategories[10]" :key="category">
                         <div
@@ -90,7 +90,7 @@ const fontSize = ref();
 
 setInterval(() => {
    let size = window.innerWidth;
-   fontSize.value = size >= 1920 ? 14 : size >= 1080 ? 12 : size >= 720 ? 10 : 8;
+   fontSize.value = size >= 1920 ? 14 : size >= 1080 ? 12 : size >= 720 ? 10 : 6;
 }, 1000);
 
 watch(fontSize, () => {

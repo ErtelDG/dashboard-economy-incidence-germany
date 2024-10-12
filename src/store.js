@@ -71,7 +71,7 @@ const store = createStore({
    },
    actions: {
       fetchData(context) {
-         fetch("http://localhost:5600/list")
+         fetch("https://economy-dashboard-germany.denniscodeworld.de/api/list")
             .then((response) => {
                if (!response.ok) {
                   throw new Error("Network response was not ok");
