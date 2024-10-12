@@ -11,7 +11,7 @@
          >
             <div :class="['h-full w-full flex items-center justify-center sm:text-base text-xs', isActive ? 'bg-gray-700' : '', `w-1/${navData.length}`]">
                <div class="hidden sm:block">{{ item[0] }}</div>
-               <div class="sm:hidden block">
+               <div class="sm:hidden block text-xxs">
                   <div>{{ item[2] }}</div>
                   <div>{{ item[3] }}</div>
                </div>

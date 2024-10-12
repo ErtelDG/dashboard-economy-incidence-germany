@@ -1,11 +1,11 @@
 <template>
-   <div class="w-full h-full flex items-start justify-center">
+   <div class="w-full h-full flex items-start justify-center text-xxs sm:text-base">
       <div v-if="chartCategories[0]" class="rounded-md border-4 w-11/12 sm:w-full flex-col items-center p-2 scrollbar-w-0">
          <div class="flex w-full items-center justify-center py-2">
             <div class="w-1/6 flex items-center justify-center">
                <div class="dropdown flex-col item-center w-full">
-                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 w-full text-xs sm:text-sm rounded-md">Kategorie</button>
-                  <div class="dropdown-content w-full">
+                  <button class="dropbtn hover:cursor-pointer hover:bg-[#DDDDDD] border-2 p-2 sm:w-full rounded-md">Kategorie</button>
+                  <div class="dropdown-content sm:w-full rounded-md h-40 sm:h-72 overflow-scroll scrollbar-w-0">
                      <div v-for="(value, category) in chartCategories[10]" :key="category">
                         <div
                            v-if="
@@ -14,7 +14,7 @@
                               isFinite(parseFloat(String(value).replace(',', '.')))
                            "
                         >
-                           <div class="break-words hyphens-auto text-xs">
+                           <div class="break-words hyphens-auto hover:cursor-pointer hover:bg-gray-700">
                               <input type="radio" :id="`${category}@@@${subcategory}`" :value="category" v-model="chartFilter" />
                               <label :for="`${category}@@@${subcategory}`">{{ category }}</label>
                            </div>
@@ -26,11 +26,11 @@
             <div class="w-4/6 text-center font-bold text-wrap px-4">{{ chartData.title }}</div>
 
             <div class="w-1/6 flex items-center justify-center">
-               <div v-if="chartType" class="flex items-center justify-center gap-x-2 w-full">
+               <div v-if="chartType" class="flex items-center justify-center gap-x-1 sm:gap-x-2 w-full">
                   <div
                      @click="selectChartType('line')"
-                     :class="['rounded-md border cursor-pointer', chartType === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
-                     class="flex justify-center items-center w-8 h-8"
+                     :class="['rounded-md border cursor-pointer ', chartType === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
+                     class="flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8"
                   >
                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4/5 h-4/5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M4 14l4-5 5 5 6-9" />
@@ -40,7 +40,7 @@
                   <div
                      @click="selectChartType('bar')"
                      :class="['rounded-md border cursor-pointer', chartType === 'bar' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
-                     class="flex justify-center items-center w-8 h-8"
+                     class="flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8"
                   >
                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4/5 h-4/5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h4v10H3V10zm7-5h4v15h-4V5zm7 8h4v7h-4v-7z" />
@@ -49,7 +49,7 @@
                </div>
             </div>
          </div>
-         <div class="flex items-center w-full">
+         <div class="flex items-center w-full text-xxs sm:text-base">
             <div class="flex aspect-[2/1] w-full border-gray-200 p-2 justify-center relative">
                <div
                   v-if="!chartData.datasets[0].data.every((element) => element != null)"
@@ -117,6 +117,7 @@ async function updateChart() {
          myCharts.get(canvasId.value).destroy();
          myCharts.delete(canvasId.value);
       }
+
       const hasNonNullNonUndefined = !chartData.value.datasets[0].data.every((element) => element === null || element === undefined);
 
       if (hasNonNullNonUndefined) {
@@ -129,14 +130,30 @@ async function updateChart() {
             }
          });
 
+         const currentDate = new Date();
+         const fiveYearsAgo = new Date();
+         fiveYearsAgo.setFullYear(currentDate.getFullYear() - 3);
+
+         const filteredData = [];
+         const filteredLabels = [];
+
+         chartData.value.labels.forEach((label, index) => {
+            const [day, month, year] = label.split("/").map(Number);
+            const labelDate = new Date(year, month - 1, day);
+            if (labelDate >= fiveYearsAgo && labelDate <= currentDate) {
+               filteredLabels.push(label);
+               filteredData.push(chartData.value.datasets[0].data[index]);
+            }
+         });
+
          const newChart = new Chart(chartElement, {
             type: chartType.value,
             data: {
-               labels: chartData.value.labels,
+               labels: filteredLabels,
                datasets: [
                   {
                      label: chartData.value.datasets[0].label,
-                     data: chartData.value.datasets[0].data,
+                     data: filteredData,
                      pointRadius: 1,
                      pointHoverRadius: 5,
                      fill: false,
@@ -151,7 +168,7 @@ async function updateChart() {
                      ticks: {
                         padding: 8,
                         align: "center",
-                        maxTicksLimit: 6,
+                        maxTicksLimit: 3,
                         autoSkip: true,
                         maxRotation: 0,
                         minRotation: 0,
@@ -320,5 +337,9 @@ label:hover {
 
 input[type="radio"]:checked + label {
    background-color: #ddd;
+}
+
+.scrollbar-w-0 {
+   scrollbar-width: none;
 }
 </style>

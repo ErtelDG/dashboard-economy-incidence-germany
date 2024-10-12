@@ -2,7 +2,7 @@
    <div
       :class="[
          'inset-x-0 left-0 h-full  bg-gray-800 transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 lg:z-0',
-         store.state.sidebarVisible ? 'translate-x-0 w-80' : 'lg:w-80 w-16',
+         store.state.sidebarVisible ? 'translate-x-0 w-80' : 'lg:w-80 sm:w-16 w-12',
       ]"
    >
       <div class="scrollbar-width-noneflex flex-col flex-1 relative">

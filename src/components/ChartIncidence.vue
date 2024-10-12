@@ -1,6 +1,6 @@
 <template>
-   <div class="w-full h-full flex items-center justify-center">
-      <div v-if="indicatorData[props.indicatorID]" class="rounded-md border-4 w-full flex-col items-center p-2 scrollbar-w-0 md:text-base text-xs">
+   <div class="w-full h-full flex items-center justify-center text-xs sm:text-base">
+      <div v-if="indicatorData[props.indicatorID]" class="rounded-md border-4 sm:w-full flex-col items-center p-2 scrollbar-w-0">
          <div class="flex w-full items-center justify-center py-2">
             <div class="w-1/6 flex items-center justify-center border rounded-md">
                <div
@@ -8,7 +8,7 @@
                   :key="value"
                   @click="chartFilterDuration = value"
                   :class="[
-                     'w-1/3 h-8 cursor-pointer text-center text-xs flex items-center justify-center',
+                     'w-1/3 h-6  sm:h-8 cursor-pointer text-center flex items-center justify-center',
                      chartFilterDuration === value ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black',
                      index === 0 ? 'rounded-l-md' : '',
                      index === chartCategories.length - 1 ? 'rounded-r-md' : '',
@@ -19,7 +19,7 @@
                   <label
                      :for="`${canvasId}@@@${value}`"
                      :class="[
-                        'w-4/5 h-4/5 cursor-pointer flex justify-center items-center',
+                        'w-4/5 h-4/5 cursor-pointer flex justify-center items-center text-xxs sm:text-base',
                         chartFilterDuration === value ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black',
                      ]"
                   >
@@ -28,13 +28,13 @@
                </div>
             </div>
 
-            <div class="w-4/6 text-center font-bold text-wrap px-2">{{ indicatorData[props.indicatorID].title }}</div>
+            <div class="w-4/6 text-center font-bold text-wrap px-2 text-xxs sm:text-base">{{ indicatorData[props.indicatorID].title }}</div>
             <div class="w-1/6 flex items-center justify-center">
                <div v-if="chartType" class="flex items-center justify-center gap-x-2 w-full">
                   <div
                      @click="selectChartType('line')"
                      :class="['rounded-md border cursor-pointer', chartType === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
-                     class="flex justify-center items-center w-8 h-8"
+                     class="flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8"
                   >
                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4/5 h-4/5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M4 14l4-5 5 5 6-9" />
@@ -44,7 +44,7 @@
                   <div
                      @click="selectChartType('bar')"
                      :class="['rounded-md border cursor-pointer', chartType === 'bar' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
-                     class="flex justify-center items-center w-8 h-8"
+                     class="flex justify-center items-center w-6 h-6 sm:w-8 sm:h-8"
                   >
                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4/5 h-4/5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h4v10H3V10zm7-5h4v15h-4V5zm7 8h4v7h-4v-7z" />
@@ -298,7 +298,7 @@ function updateLegendDropdown(datasets) {
 
 async function getIncidenceData(IncId) {
    try {
-      const response = await fetch(`https://economy-dashboard-germany.denniscodeworld.de/api/data?id=${IncId}`);
+      const response = await fetch(`http://localhost:5600/data?id=${IncId}`);
       const data = await response.json();
 
       const keysToCheck = Object.keys(data.data[0]);
