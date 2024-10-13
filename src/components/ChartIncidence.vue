@@ -1,6 +1,6 @@
 <template>
    <div class="w-full h-full flex items-center justify-center text-xs sm:text-base">
-      <div v-if="indicatorData[props.indicatorID]" class="rounded-md border-4 sm:w-full flex-col items-center p-2 scrollbar-w-0">
+      <div v-if="indicatorData[props.indicatorID]" class="rounded-md border-4 w-full flex-col items-center p-2 scrollbar-w-0">
          <div class="flex w-full items-center justify-center py-2">
             <div class="w-1/6 flex items-center justify-center border rounded-md">
                <div
@@ -112,12 +112,12 @@ const fontSize = ref();
 
 onMounted(() => {
    let size = window.innerWidth;
-   fontSize.value = size >= 1920 ? 14 : size >= 1080 ? 12 : size >= 720 ? 10 : 8;
+   fontSize.value = size >= 1080 ? 16 : size >= 720 ? 14 : 12;
 });
 
 setInterval(() => {
    let size = window.innerWidth;
-   fontSize.value = size >= 1920 ? 14 : size >= 1080 ? 12 : size >= 720 ? 10 : 8;
+   fontSize.value =  size >= 1080 ? 16 : size >= 720 ? 14 : 12;
 }, 1000);
 
 watch(fontSize, () => {
@@ -298,7 +298,7 @@ function updateLegendDropdown(datasets) {
 
 async function getIncidenceData(IncId) {
    try {
-      const response = await fetch(`https://economy-dashboard-germany.denniscodeworld.de/api/data?id=${IncId}`);
+      const response = await fetch(`http://localhost:5600/data?id=${IncId}`);
       const data = await response.json();
 
       const keysToCheck = Object.keys(data.data[0]);

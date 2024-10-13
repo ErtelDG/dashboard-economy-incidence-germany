@@ -24,7 +24,7 @@ const apiData = reactive({});
 
 const fetchData = async (id) => {
    try {
-      const response = await fetch(`https://economy-dashboard-germany.denniscodeworld.de/api/data?id=${id}`);
+      const response = await fetch(`http://localhost:5600/data?id=${id}`);
       const data = await response.json();
       Object.keys(data.data).forEach((element) => {
          Object.keys(data.data[element]).forEach((element2) => {
@@ -83,7 +83,7 @@ import Sidebar from "./Sidebar.vue";
       </div>
       <div class="flex flex-col flex-1 overflow-y-auto scrollbar-w-0 w-full relative">
          <div class="w-full flex flex-wrap px-2 py-4 overflow-hidden justify-center gap-x-4">
-            <div v-for="subcategory in selectedSubcategories" :key="subcategory" class="mb-4 md:w-[48rem]">
+            <div v-for="subcategory in selectedSubcategories" :key="subcategory" class="mb-4 w-full md:w-[48rem]">
                <Chart v-if="apiData[subcategory]" :subcategory="subcategory" :apiData="apiData[subcategory]" />
                <div v-if="!apiData[subcategory]" class="w-full h-[28.5rem] flex justify-center items-center rounded-md border-4">
                   <div>
