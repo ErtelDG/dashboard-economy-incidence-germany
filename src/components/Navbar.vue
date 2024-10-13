@@ -26,7 +26,7 @@ import { useStore } from "vuex";
 import { ref, watch } from "vue";
 
 const navData = ref([
-   ["Individuelle Indikatoren Deutschland", "/ChartContent", "Individuelle", "Indikatoren GER"],
+   ["Individuelle Indikatoren", "/ChartContent", "Individuelle", "Indikatoren"],
    ["Indikatoren", "/", "Indikatoren"],
    ["Frühindikatoren", "/LeadingIndicators", "Früh-", "indikatoren"],
    ["Präsenzindikatoren", "/PresenceIndicators", "Präsenz-", "indikatoren"],
