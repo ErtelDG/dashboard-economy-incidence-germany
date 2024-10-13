@@ -108,7 +108,7 @@ store.state.indicatore = {
    leadingIndicators: {
       indicator: "Frühindikatoren",
       description:
-         "Frühindikatoren helfen dabei, die zukünftige Entwicklung einer Volkswirtschaft möglichst präzise einzuschätzen. Obwohl diese indikatoren immer ein gewisses Maß an Spekulation enthalten, geben sie einen Einblick in den aktuellen Trend. So können beispielsweise die Gewinnerwartungen von Unternehmen als guter indicator für den zukünftigen Verlauf der Konjunkturkurve dienen.",
+         "Frühindikatoren helfen dabei, die zukünftige Entwicklung einer Volkswirtschaft möglichst präzise einzuschätzen. Obwohl diese Indikatoren immer ein gewisses Maß an Spekulation enthalten, geben sie einen Einblick in den aktuellen Trend. So können beispielsweise die Gewinnerwartungen von Unternehmen als guter Indikator für den zukünftigen Verlauf der Konjunkturkurve dienen.",
       example: [
          {
             indicator: "Auftragseingangsindex",
@@ -214,7 +214,7 @@ store.state.indicatore = {
    laggingIndicators: {
       indicator: "Spätindikatoren",
       description:
-         "Spätindikatoren dienen dazu, die konjunkturelle Entwicklung im Nachhinein zu erklären oder zu beschreiben. Einer der wichtigsten indikatoren in diesem Bereich ist die Entwicklung der Arbeitslosenzahlen",
+         "Spätindikatoren dienen dazu, die konjunkturelle Entwicklung im Nachhinein zu erklären oder zu beschreiben. Einer der wichtigsten Indikatoren in diesem Bereich ist die Entwicklung der Arbeitslosenzahlen.",
       example: [
          {
             indicator: "Arbeitskosten",
@@ -260,7 +260,7 @@ store.state.economicDecision = {
    p1: {
       headline: "Weshalb sind Konjunkturindikatoren von Bedeutung?",
       paragraphs: [
-         "Konjunkturindikatoren liefern wesentliche Daten und Vergleichswerte, die es ermöglichen, die wirtschaftliche Entwicklung einer Volkswirtschaft zu bewerten. Sie sind unverzichtbar für die Wirtschaftswissenschaften, da sie Prognosen, Analysen und descriptionen des aktuellen Wirtschaftsgeschehens ermöglichen und dem Staat die Grundlage für die Ausgestaltung seiner Konjunkturpolitik bieten.",
+         "Konjunkturindikatoren liefern wesentliche Daten und Vergleichswerte, die es ermöglichen, die wirtschaftliche Entwicklung einer Volkswirtschaft zu bewerten. Sie sind unverzichtbar für die Wirtschaftswissenschaften, da sie Prognosen, Analysen und Beschreibungen des aktuellen Wirtschaftsgeschehens ermöglichen und dem Staat die Grundlage für die Ausgestaltung seiner Konjunkturpolitik bieten.",
          "In Unternehmen gewinnen Konjunkturindikatoren besonders bei längeren Planungszyklen an Bedeutung. Vor allem Betriebe im sekundären (z. B. Industrie und produzierendes Gewerbe) und tertiären Sektor (Dienstleistungen) sind auf langfristige Planungen angewiesen, die stark von der konjunkturellen Lage abhängen. Dies gilt insbesondere für den Aufbau von Produktion und Kompetenzen, da hier oft mit langen Amortisationszeiten gerechnet wird und die Kapazitäten optimal ausgelastet sein müssen.",
       ],
    },
@@ -268,15 +268,15 @@ store.state.economicDecision = {
       headline: "Die Relevanz von Konjunkturindikatoren",
       paragraphs: [
          "Wirtschaftssubjekte wie Unternehmen, Medien und Studierende der Wirtschaftswissenschaften benötigen verlässliche Messgrößen, um komplexe wirtschaftliche Zusammenhänge wie die konjunkturelle Entwicklung anschaulich darzustellen.",
-         "Daher berechnen sowohl das Statistische Bundesamt als auch Wirtschaftsforschungsinstitute regelmäßig indikatoren, die es den Interessengruppen ermöglichen, die wirtschaftliche Lage schnell zu überblicken und präzise einzuschätzen. Damit diese indikatoren eine hohe Aussagekraft besitzen, werden sie in möglichst kurzen Zeitabständen erhoben, in der Regel quartalsweise oder monatlich.",
-         "Um langfristige Vergleiche zu ermöglichen und den Zahlen mehr Aussagekraft zu verleihen, müssen die indikatoren als sogenannte „lange Reihen“ vorliegen, das heißt, sie müssen über mehrere Jahre hinweg erfasst und ausgewertet werden. Nur so lässt sich die konjunkturelle Entwicklung mit ihren verschiedenen Phasen in Form einer Konjunkturkurve darstellen.",
-         "In Deutschland ist es vor allem das Statistische Bundesamt, das die Aufgabe hat, ein umfassendes Bild der Wirtschaftsstruktur und der wirtschaftlichen Entwicklung zu zeichnen und eine fortlaufende Konjunkturdescription zu liefern.",
+         "Daher berechnen sowohl das Statistische Bundesamt als auch Wirtschaftsforschungsinstitute regelmäßig Indikatoren, die es den Interessengruppen ermöglichen, die wirtschaftliche Lage schnell zu überblicken und präzise einzuschätzen. Damit diese Indikatoren eine hohe Aussagekraft besitzen, werden sie in möglichst kurzen Zeitabständen erhoben, in der Regel quartalsweise oder monatlich.",
+         "Um langfristige Vergleiche zu ermöglichen und den Zahlen mehr Aussagekraft zu verleihen, müssen die Indikatoren als sogenannte „lange Reihen“ vorliegen, das heißt, sie müssen über mehrere Jahre hinweg erfasst und ausgewertet werden. Nur so lässt sich die konjunkturelle Entwicklung mit ihren verschiedenen Phasen in Form einer Konjunkturkurve darstellen.",
+         "In Deutschland ist es vor allem das Statistische Bundesamt, das die Aufgabe hat, ein umfassendes Bild der Wirtschaftsstruktur und der wirtschaftlichen Entwicklung zu zeichnen und eine fortlaufende Konjunkturbeschreibung zu liefern.",
       ],
    },
    p3: {
       headline: "Chronologische Einteilung der Konjunkturindikatoren",
       paragraphs: [
-         "Konjunkturindikatoren sind Kennzahlen, die dazu dienen, die Entwicklung einer Volkswirtschaft über einen bestimmten Zeitraum hinweg abzubilden oder zu beschreiben. Sie liefern wichtige Zahlenwerte und Vergleichsreihen für die Prognose, description und Analyse der Konjunktur.",
+         "Konjunkturindikatoren sind Kennzahlen, die dazu dienen, die Entwicklung einer Volkswirtschaft über einen bestimmten Zeitraum hinweg abzubilden oder zu beschreiben. Sie liefern wichtige Zahlenwerte und Vergleichsreihen für die Prognose, Beschreibung und Analyse der Konjunktur.",
          "Konjunkturindikatoren können vor, während und nach einem bestimmten Ereignis oder einer Konjunkturphase erfasst werden.",
       ],
    },
