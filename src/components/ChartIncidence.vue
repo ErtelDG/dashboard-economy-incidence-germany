@@ -117,7 +117,7 @@ onMounted(() => {
 
 setInterval(() => {
    let size = window.innerWidth;
-   fontSize.value =  size >= 1080 ? 16 : size >= 720 ? 14 : 12;
+   fontSize.value = size >= 1080 ? 16 : size >= 720 ? 14 : 12;
 }, 1000);
 
 watch(fontSize, () => {
@@ -298,7 +298,7 @@ function updateLegendDropdown(datasets) {
 
 async function getIncidenceData(IncId) {
    try {
-      const response = await fetch(`http://localhost:5600/data?id=${IncId}`);
+      const response = await fetch(`https://economy-dashboard-germany.denniscodeworld.de/api/data?id=${IncId}`);
       const data = await response.json();
 
       const keysToCheck = Object.keys(data.data[0]);

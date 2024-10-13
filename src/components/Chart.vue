@@ -90,7 +90,7 @@ const fontSize = ref();
 
 setInterval(() => {
    let size = window.innerWidth;
-   fontSize.value = size >= 1080 ? 16 : size >= 720 ? 14 : 12;
+   fontSize.value = size >= 1080 ? 16 : size >= 720 ? 14 : 10;
 }, 1000);
 
 watch(fontSize, () => {
@@ -166,7 +166,7 @@ async function updateChart() {
                scales: {
                   x: {
                      ticks: {
-                        padding: 8,
+                        padding: 4,
                         align: "center",
                         maxTicksLimit: 3,
                         autoSkip: true,
@@ -195,8 +195,8 @@ async function updateChart() {
                   padding: {
                      left: window.innerWidth * 0.01,
                      right: window.innerWidth * 0.01,
-                     top: window.innerHeight * 0.02,
-                     bottom: window.innerHeight * 0.02,
+                     top: window.innerHeight * 0.01,
+                     bottom: window.innerHeight * 0.01,
                   },
                },
             },
