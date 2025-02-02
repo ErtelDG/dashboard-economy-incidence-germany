@@ -24,3 +24,5 @@ volume
 *.njsproj
 *.sln
 *.sw?
+
+.vscode
